@@ -8,3 +8,8 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Site is strictly static: no backend, database or server functions. Why: owner requirement.
+- All business details/links live in src/config/siteConfig.ts and menu in src/config/menuData.ts; components read only from there. Why: owner edits one place.
+- Empty config values must hide their buttons; never invent contact details. Why: no fake info.
