@@ -15,6 +15,16 @@ const schema = z.object({
 type Data = z.infer<typeof schema>;
 const empty = { name: "", phone: "", email: "", date: "", time: "", guests: "2", requests: "" };
 
+function F({ k, label, errors, children }: { k: string; label: string; errors: Record<string, string>; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="eyebrow text-muted-foreground">{label}</span>
+      {children}
+      {errors[k] && <span className="mt-1 block text-sm text-destructive" role="alert">{errors[k]}</span>}
+    </label>
+  );
+}
+
 export function ReservationForm() {
   const [form, setForm] = useState(empty);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -48,13 +58,6 @@ export function ReservationForm() {
   };
 
   const field = "mt-2 w-full rounded border bg-card px-4 py-3 text-base";
-  const F = ({ k, label, children }: { k: string; label: string; children: React.ReactNode }) => (
-    <label className="block">
-      <span className="eyebrow text-muted-foreground">{label}</span>
-      {children}
-      {errors[k] && <span className="mt-1 block text-sm text-destructive" role="alert">{errors[k]}</span>}
-    </label>
-  );
 
   if (step === "saved")
     return (
@@ -92,13 +95,13 @@ export function ReservationForm() {
 
   return (
     <form onSubmit={submit} noValidate className="grid gap-5 sm:grid-cols-2">
-      <F k="name" label="Full name"><input className={field} value={form.name} onChange={set("name")} autoComplete="name" /></F>
-      <F k="phone" label="Phone number"><input className={field} value={form.phone} onChange={set("phone")} type="tel" autoComplete="tel" placeholder="+250…" /></F>
-      <F k="email" label="Email (optional)"><input className={field} value={form.email} onChange={set("email")} type="email" autoComplete="email" /></F>
-      <F k="guests" label="Guests"><input className={field} value={form.guests} onChange={set("guests")} type="number" min={1} max={50} /></F>
-      <F k="date" label="Preferred date"><input className={field} value={form.date} onChange={set("date")} type="date" /></F>
-      <F k="time" label="Preferred time"><input className={field} value={form.time} onChange={set("time")} type="time" /></F>
-      <div className="sm:col-span-2"><F k="requests" label="Special requests"><textarea className={field} rows={3} value={form.requests} onChange={set("requests")} maxLength={500} placeholder="Celebration, dietary needs, seating…" /></F></div>
+      <F errors={errors} k="name" label="Full name"><input className={field} value={form.name} onChange={set("name")} autoComplete="name" /></F>
+      <F errors={errors} k="phone" label="Phone number"><input className={field} value={form.phone} onChange={set("phone")} type="tel" autoComplete="tel" placeholder="+250…" /></F>
+      <F errors={errors} k="email" label="Email (optional)"><input className={field} value={form.email} onChange={set("email")} type="email" autoComplete="email" /></F>
+      <F errors={errors} k="guests" label="Guests"><input className={field} value={form.guests} onChange={set("guests")} type="number" min={1} max={50} /></F>
+      <F errors={errors} k="date" label="Preferred date"><input className={field} value={form.date} onChange={set("date")} type="date" /></F>
+      <F errors={errors} k="time" label="Preferred time"><input className={field} value={form.time} onChange={set("time")} type="time" /></F>
+      <div className="sm:col-span-2"><F errors={errors} k="requests" label="Special requests"><textarea className={field} rows={3} value={form.requests} onChange={set("requests")} maxLength={500} placeholder="Celebration, dietary needs, seating…" /></F></div>
       <Button type="submit" size="lg" className="sm:col-span-2">Review request</Button>
     </form>
   );
