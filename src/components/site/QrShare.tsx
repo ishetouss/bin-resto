@@ -29,7 +29,7 @@ export function QrShare() {
       setError(true);
     }
   };
-  useEffect(() => { if (url && !generated.current) generate(); }, [url]);
+  useEffect(() => { if (url && !generated.current) void generate(); }, [url]);
 
   const download = () => {
     const a = document.createElement("a");
@@ -39,7 +39,7 @@ export function QrShare() {
   };
   const print = () => {
     const w = window.open("", "_blank");
-    if (!w) return toast.error("Please allow pop-ups to print.");
+    if (!w) { toast.error("Please allow pop-ups to print."); return; }
     w.document.write(`<html><head><title>BIN RESTO menu QR</title></head><body style="font-family:serif;text-align:center;padding:40px"><h1 style="letter-spacing:.2em">BIN RESTO</h1><p>Scan to explore our menu</p><img src="${dataUrl}" style="width:320px"/><p style="font-size:12px">${url}</p><script>window.onload=()=>window.print()</script></body></html>`);
     w.document.close();
   };

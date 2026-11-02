@@ -9,7 +9,7 @@ export const siteConfig = {
   tagline: "Exceptional Taste. Beautiful Moments.",
   logoText: "BIN RESTO",
   /** Optional path to an image logo in /public (e.g. "/logo.png"). Empty = typographic wordmark. */
-  logoImage: "",
+  logoImage: "/__l5e/assets-v1/0d5c4f1b-7c8d-4924-9e0f-8fab6ed4bf69/stafford-logo.jpg",
   currency: "RWF",
 
   /**

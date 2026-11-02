@@ -8,14 +8,17 @@ import sandwich from "@/assets/sandwich.jpg";
 import fries from "@/assets/fries.jpg";
 import dessert from "@/assets/dessert.jpg";
 import drink from "@/assets/drink.jpg";
+import coffee from "@/assets/coffee.jpg";
+import mains from "@/assets/mains.jpg";
 import { Button } from "@/components/ui/button";
 import { HangingFrames } from "@/components/site/HangingFrames";
 import { Reveal } from "@/components/site/Reveal";
-import { MenuExplorer } from "@/components/site/MenuExplorer";
+import { MenuHighlights, priceText } from "@/components/site/MenuExplorer";
+import venue from "@/assets/venue-night.jpg.asset.json";
 import { QrShare } from "@/components/site/QrShare";
 import { ServiceArea, ContactSection } from "@/components/site/ContactBlocks";
 import { menuItems, tagLabel } from "@/config/menuData";
-import { formatPrice, whatsappLink } from "@/config/siteConfig";
+import { whatsappLink } from "@/config/siteConfig";
 import { useCart } from "@/lib/cart";
 import { toast } from "sonner";
 
@@ -43,8 +46,8 @@ function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const specials = menuItems.filter((m) => m.tags?.some((t) => t === "offer" || t === "chef")).slice(0, 3);
-  const best = menuItems.filter((m) => m.tags?.includes("bestseller")).slice(0, 4);
+  const specials = menuItems.filter((m) => m.tags?.includes("chef")).slice(0, 3);
+  const best = menuItems.filter((m) => m.featured && !m.tags?.length).slice(0, 5);
   const { add } = useCart();
 
   return (
@@ -58,7 +61,7 @@ function Home() {
               Exceptional Taste.<br /><em className="text-burgundy">Beautiful Moments.</em>
             </h1>
             <p className="mt-6 max-w-md text-lg text-muted-foreground animate-in fade-in duration-1000 [animation-delay:300ms] fill-mode-both">
-              Golden samosas, hand-glazed doughnuts and generous plates — served with warmth, made to be remembered.
+              Carefully brewed coffee, fresh juices and generous plates — served with warmth, made to be remembered.
             </p>
             <div className="mt-9 flex flex-wrap gap-3 animate-in fade-in slide-in-from-bottom-2 duration-1000 [animation-delay:500ms] fill-mode-both">
               <Button asChild size="lg"><Link to="/menu">Explore our menu</Link></Button>
@@ -97,11 +100,11 @@ function Home() {
         </Reveal>
         <div className="grid gap-6 md:col-span-5 md:pt-24">
           <Reveal delay={150}>
-            <figure className="group overflow-hidden"><img src={samosa} alt="Golden samosas" loading="lazy" width={816} height={816} className="aspect-square w-full object-cover transition-transform duration-1000 group-hover:scale-105" /></figure>
-            <h3 className="mt-3 text-2xl">Golden samosas</h3>
+            <figure className="group overflow-hidden"><img src={coffee} alt="Cappuccino with latte art" loading="lazy" width={816} height={816} className="aspect-square w-full object-cover transition-transform duration-1000 group-hover:scale-105" /></figure>
+            <h3 className="mt-3 text-2xl">Brewed with care</h3>
           </Reveal>
           <Reveal delay={300}>
-            <p className="text-muted-foreground">From crisp pastries to hand-finished sweet treats, our kitchen celebrates simple ingredients done beautifully.</p>
+            <p className="text-muted-foreground">From espresso to Kawaccino, Rwandan teas to fresh-pressed juices — and a kitchen that celebrates simple ingredients done beautifully.</p>
           </Reveal>
         </div>
       </section>
@@ -126,21 +129,21 @@ function Home() {
                   </div>
                   <div className="mt-4 flex items-baseline justify-between gap-4">
                     <h3 className="text-2xl">{m.name}</h3>
-                    <span className="text-gold">{formatPrice(m.price)}</span>
+                    <span className="text-gold">{priceText(m)}</span>
                   </div>
-                  <p className="mt-1 text-sm text-ivory/70">{m.description}</p>
-                  <button onClick={() => { add(m); toast.success(`${m.name} added`); }} className="eyebrow mt-4 text-gold hover:underline">Add to order +</button>
+                  {m.description && <p className="mt-1 text-sm text-ivory/70">{m.description}</p>}
+                  <button onClick={() => { if (m.price !== null) { add({ id: m.id, name: m.name, price: m.price }); toast.success(`${m.name} added`); } }} className="eyebrow mt-4 text-gold hover:underline">Add to order +</button>
                 </article>
               </Reveal>
             ))}
           </div>
-          <p className="mt-20 text-center text-xs text-ivory/50">Sample specials — availability changes daily.</p>
+          <p className="mt-20 text-center text-xs text-ivory/50">Availability may vary — please ask our team.</p>
         </div>
       </section>
 
       {/* BESTSELLERS — numbered list */}
       <section className="mx-auto max-w-7xl px-5 py-24 md:px-8">
-        <Reveal><p className="eyebrow text-gold">Customer favourites</p><h2 className="mt-3 text-5xl">Bestsellers</h2></Reveal>
+        <Reveal><p className="eyebrow text-gold">Hand-picked</p><h2 className="mt-3 text-5xl">House favourites</h2></Reveal>
         <ol className="mt-12 divide-y border-y">
           {best.map((m, i) => (
             <Reveal as="li" key={m.id} delay={i * 80}>
@@ -148,7 +151,7 @@ function Home() {
                 <span className="w-10 font-display text-3xl italic text-gold">0{i + 1}</span>
                 <img src={m.image} alt="" loading="lazy" width={80} height={80} className="size-16 rounded-full object-cover transition-transform duration-500 group-hover:scale-110 md:size-20" />
                 <div className="flex-1"><h3 className="text-2xl md:text-3xl">{m.name}</h3><p className="hidden text-sm text-muted-foreground md:block">{m.description}</p></div>
-                <span className="text-sm tabular-nums">{formatPrice(m.price)}</span>
+                <span className="text-sm tabular-nums">{priceText(m)}</span>
               </div>
             </Reveal>
           ))}
@@ -159,7 +162,7 @@ function Home() {
       <section className="bg-cream/50 py-24">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal className="mb-10 text-center"><p className="eyebrow text-gold">The menu</p><h2 className="mt-3 text-5xl">Taste your way through</h2></Reveal>
-          <MenuExplorer limit={6} compact />
+          <MenuHighlights />
           <div className="mt-6 text-center"><Button asChild><Link to="/menu">View full menu</Link></Button></div>
         </div>
       </section>
@@ -167,14 +170,14 @@ function Home() {
       {/* STORY */}
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-24 md:grid-cols-2 md:px-8">
         <Reveal className="relative">
-          <img src={dessert} alt="Chocolate gâteau" loading="lazy" width={816} height={816} className="aspect-[4/5] w-4/5 object-cover shadow-frame" />
-          <img src={drink} alt="Fresh passion juice and iced coffee" loading="lazy" width={816} height={816} className="absolute -bottom-8 right-0 w-1/2 border-8 border-ivory object-cover shadow-frame" />
+          <img src={venue.url} alt="The restaurant terrace lit up at night" loading="lazy" width={689} height={532} className="aspect-[4/5] w-4/5 object-cover shadow-frame" />
+          <img src={coffee} alt="Cappuccino and espresso" loading="lazy" width={816} height={816} className="absolute -bottom-8 right-0 w-1/2 border-8 border-ivory object-cover shadow-frame" />
         </Reveal>
         <Reveal delay={150}>
           <p className="eyebrow text-gold">Our story</p>
           <h2 className="mt-3 text-5xl">Rooted in welcome.</h2>
-          <p className="mt-6 text-muted-foreground">BIN RESTO began with a simple idea: everyday favourites, cooked with care and served with genuine hospitality. Today we bring that spirit to guests from Kigali to the Southern Province.</p>
-          <p className="mt-4 text-sm italic text-muted-foreground">Story text is a placeholder — the owner can replace it with BIN RESTO's own story.</p>
+          <p className="mt-6 text-muted-foreground">Under warm brick arches, we pour carefully brewed Rwandan coffee and serve honest, generous plates — from a morning Rolex to a slow evening curry. Everyone is welcome at our table.</p>
+          
         </Reveal>
       </section>
 
@@ -192,7 +195,7 @@ function Home() {
       <section className="mx-auto max-w-7xl px-5 py-24 md:px-8">
         <Reveal className="mb-10"><p className="eyebrow text-gold">Gallery</p><h2 className="mt-3 text-5xl">From our kitchen</h2></Reveal>
         <div className="grid auto-rows-[160px] grid-cols-2 gap-3 md:auto-rows-[220px] md:grid-cols-4">
-          {[[doughnut, "md:row-span-2", "Doughnuts"], [fries, "", "Fries"], [sandwich, "md:col-span-2", "Club sandwich"], [samosa, "", "Samosas"], [burger, "row-span-2 md:row-span-1", "Burger"], [dessert, "", "Dessert"], [drink, "", "Drinks"]].map(([src, cls, alt], i) => (
+          {[[coffee, "md:row-span-2", "Cappuccino"], [fries, "", "Fries"], [mains, "md:col-span-2", "Curry and grilled tilapia"], [samosa, "", "Samosas"], [burger, "row-span-2 md:row-span-1", "Burger"], [dessert, "", "Dessert"], [drink, "", "Drinks"]].map(([src, cls, alt], i) => (
             <Reveal key={i} delay={i * 60} className={`group overflow-hidden ${cls}`}>
               <img src={src} alt={alt} loading="lazy" className="size-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110" />
             </Reveal>

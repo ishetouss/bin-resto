@@ -5,7 +5,7 @@ export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
       { title: "Menu — BIN RESTO" },
-      { name: "description", content: "Samosas, Amore sweet treats, doughnuts, burgers, sandwiches, desserts and drinks at BIN RESTO." },
+      { name: "description", content: "Coffee, tea, juices, smoothies, breakfast, curries, grills, wraps and bakery at BIN RESTO — prices in RWF." },
       { property: "og:title", content: "The BIN RESTO Menu" },
       { property: "og:description", content: "Browse, search and build your order from the BIN RESTO menu." },
       { property: "og:type", content: "website" },

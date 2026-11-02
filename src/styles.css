@@ -166,3 +166,5 @@
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+@keyframes rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
