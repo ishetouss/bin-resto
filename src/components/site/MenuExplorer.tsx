@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { Plus, Search } from "lucide-react";
-import { categories, menuItems, availabilityLabel, tagLabel, type MenuItem } from "@/config/menuData";
+import { Plus, Search, X } from "lucide-react";
+import { categories, menuItems, availabilityLabel, tagLabel, type MenuItem, type Group } from "@/config/menuData";
 import { formatPrice } from "@/config/siteConfig";
 import { useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
@@ -8,95 +8,188 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-export function MenuExplorer({ limit, compact }: { limit?: number; compact?: boolean }) {
-  const [cat, setCat] = useState("all");
-  const [q, setQ] = useState("");
-  const [detail, setDetail] = useState<MenuItem | null>(null);
+export function priceText(m: MenuItem) {
+  return m.priceLabel ?? (m.price === null ? "Ask for price" : formatPrice(m.price));
+}
+
+function useAdd() {
   const { add } = useCart();
-
-  const usedCats = categories.filter((c) => menuItems.some((m) => m.category === c.id));
-  const items = useMemo(() => {
-    const s = q.trim().toLowerCase();
-    const list = menuItems.filter((m) => (cat === "all" || m.category === cat) && (!s || `${m.name} ${m.description}`.toLowerCase().includes(s)));
-    return limit ? list.slice(0, limit) : list;
-  }, [cat, q, limit]);
-
-  const addItem = (m: MenuItem) => {
+  return (m: MenuItem) => {
+    if (m.price === null) return;
     add({ id: m.id, name: m.name, price: m.price });
     toast.success(`${m.name} added to your order`);
   };
+}
+
+function ItemDialog({ item, onClose }: { item: MenuItem | null; onClose: () => void }) {
+  const addItem = useAdd();
+  return (
+    <Dialog open={!!item} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-lg overflow-hidden p-0">
+        {item && (
+          <>
+            <img src={item.image} alt={item.name} className="aspect-[4/3] w-full object-cover animate-in zoom-in-105 duration-700" />
+            <div className="space-y-3 p-6">
+              <p className="eyebrow text-gold">{categories.find((c) => c.id === item.category)?.name}</p>
+              <DialogTitle className="font-display text-3xl font-medium">{item.name}</DialogTitle>
+              <DialogDescription>{item.description || "Ask our team for details."}</DialogDescription>
+              <p className="text-xs text-forest">{availabilityLabel[item.availability]}</p>
+              <div className="flex items-center justify-between pt-2">
+                <span className="font-display text-2xl">{priceText(item)}</span>
+                <Button disabled={item.price === null} onClick={() => { addItem(item); onClose(); }}>Add to order</Button>
+              </div>
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/** Homepage preview: featured dishes as image cards. */
+export function MenuHighlights({ limit = 6 }: { limit?: number }) {
+  const [detail, setDetail] = useState<MenuItem | null>(null);
+  const [group, setGroup] = useState<Group>("food");
+  const addItem = useAdd();
+  const items = menuItems.filter((m) => m.featured && categories.find((c) => c.id === m.category)?.group === group).slice(0, limit);
+  return (
+    <div>
+      <GroupSwitch value={group} onChange={(g) => setGroup(g as Group)} options={[["food", "Food"], ["drinks", "Drinks"]]} className="mx-auto" />
+      <ul key={group} className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((m, i) => (
+          <li key={m.id} className="group animate-in fade-in slide-in-from-bottom-6 fill-mode-both duration-700" style={{ animationDelay: `${i * 80}ms` }}>
+            <button onClick={() => setDetail(m)} className="relative block w-full overflow-hidden" aria-label={`View ${m.name}`}>
+              <img src={m.image} alt={m.name} width={600} height={450} loading="lazy" className="aspect-[4/3] w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110" />
+              <span className="absolute inset-0 bg-espresso/0 transition-colors duration-500 group-hover:bg-espresso/20" />
+              {m.tags?.[0] && <span className="eyebrow absolute left-3 top-3 bg-ivory/95 px-2.5 py-1 text-[0.6rem] text-burgundy">{tagLabel[m.tags[0]]}</span>}
+            </button>
+            <div className="mt-4 flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-2xl leading-tight">{m.name}</h3>
+                {m.description && <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{m.description}</p>}
+              </div>
+              <div className="flex shrink-0 flex-col items-end gap-2">
+                <span className="font-medium tabular-nums">{priceText(m)}</span>
+                <AddButton m={m} onAdd={addItem} />
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <ItemDialog item={detail} onClose={() => setDetail(null)} />
+    </div>
+  );
+}
+
+function AddButton({ m, onAdd }: { m: MenuItem; onAdd: (m: MenuItem) => void }) {
+  return (
+    <button disabled={m.price === null} onClick={(e) => { e.stopPropagation(); onAdd(m); }} aria-label={`Add ${m.name}`}
+      className="grid size-9 shrink-0 place-items-center rounded-full border border-burgundy text-burgundy transition-all duration-300 hover:rotate-90 hover:bg-burgundy hover:text-primary-foreground active:scale-90 disabled:opacity-30">
+      <Plus className="size-4" />
+    </button>
+  );
+}
+
+function GroupSwitch({ value, onChange, options, className }: { value: string; onChange: (v: string) => void; options: [string, string][]; className?: string }) {
+  const idx = Math.max(0, options.findIndex(([v]) => v === value));
+  return (
+    <div role="tablist" className={cn("relative grid w-fit rounded-full border bg-card p-1", className)} style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}>
+      <span aria-hidden className="absolute inset-y-1 left-1 rounded-full bg-espresso transition-transform duration-500 ease-[cubic-bezier(.6,.05,.2,1)]"
+        style={{ width: `calc((100% - 0.5rem) / ${options.length})`, transform: `translateX(${idx * 100}%)` }} />
+      {options.map(([v, label]) => (
+        <button key={v} role="tab" aria-selected={value === v} onClick={() => onChange(v)}
+          className={cn("eyebrow relative z-10 px-6 py-2.5 transition-colors duration-500", value === v ? "text-ivory" : "text-muted-foreground hover:text-foreground")}>
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Full menu: a printed-menu style book with grouped sections. */
+export function MenuExplorer() {
+  const [group, setGroup] = useState<"all" | Group>("all");
+  const [cat, setCat] = useState("all");
+  const [q, setQ] = useState("");
+  const [detail, setDetail] = useState<MenuItem | null>(null);
+  const addItem = useAdd();
+
+  const visibleCats = categories.filter((c) => group === "all" || c.group === group);
+  const sections = useMemo(() => {
+    const s = q.trim().toLowerCase();
+    return visibleCats
+      .filter((c) => cat === "all" || c.id === cat)
+      .map((c) => ({ ...c, items: menuItems.filter((m) => m.category === c.id && (!s || `${m.name} ${m.description}`.toLowerCase().includes(s))) }))
+      .filter((c) => c.items.length);
+  }, [group, cat, q]);
 
   return (
     <div>
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-2 md:mx-0 md:flex-wrap md:px-0" role="tablist" aria-label="Menu categories">
-          {[{ id: "all", name: "All" }, ...usedCats].map((c) => (
+      <div className="sticky top-16 z-20 -mx-5 space-y-4 border-b bg-background/95 px-5 py-4 backdrop-blur md:-mx-8 md:px-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <GroupSwitch value={group} onChange={(v) => { setGroup(v as typeof group); setCat("all"); }} options={[["all", "All"], ["drinks", "Drinks"], ["food", "Food"]]} />
+          <label className="relative md:w-80">
+            <span className="sr-only">Search the menu</span>
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search coffee, curry, cake…" className="w-full rounded-full border bg-card py-2.5 pl-10 pr-10 text-sm" />
+            {q && <button onClick={() => setQ("")} aria-label="Clear search" className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"><X className="size-4" /></button>}
+          </label>
+        </div>
+        <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 md:mx-0 md:px-0" role="tablist" aria-label="Menu categories">
+          {[{ id: "all", name: "Everything" }, ...visibleCats].map((c) => (
             <button key={c.id} role="tab" aria-selected={cat === c.id} onClick={() => setCat(c.id)}
-              className={cn("eyebrow shrink-0 rounded-full border px-4 py-2 transition-all duration-300", cat === c.id ? "border-burgundy bg-burgundy text-primary-foreground" : "hover:border-gold")}>
+              className={cn("shrink-0 rounded-full border px-4 py-1.5 text-sm transition-all duration-300", cat === c.id ? "border-burgundy bg-burgundy text-primary-foreground shadow-soft" : "hover:border-gold hover:text-burgundy")}>
               {c.name}
             </button>
           ))}
         </div>
-        {!compact && (
-          <label className="relative md:w-72">
-            <span className="sr-only">Search the menu</span>
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search dishes…" className="w-full rounded-full border bg-card py-2.5 pl-10 pr-4 text-sm" />
-          </label>
-        )}
       </div>
 
-      {items.length === 0 ? (
-        <p className="py-20 text-center font-display text-2xl text-muted-foreground">No dishes match your search.</p>
+      {sections.length === 0 ? (
+        <div className="py-24 text-center animate-in fade-in">
+          <p className="font-display text-3xl text-muted-foreground">Nothing matches “{q}”.</p>
+          <Button variant="outline" className="mt-6" onClick={() => { setQ(""); setCat("all"); setGroup("all"); }}>Show the full menu</Button>
+        </div>
       ) : (
-        <ul key={cat + q} className="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((m, i) => (
-            <li key={m.id} className="group animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500" style={{ animationDelay: `${i * 50}ms` }}>
-              <button onClick={() => setDetail(m)} className="block w-full text-left" aria-label={`View ${m.name}`}>
-                <div className="relative overflow-hidden">
-                  <img src={m.image} alt={m.name} width={600} height={450} loading="lazy" className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  {m.tags?.[0] && <span className="eyebrow absolute left-3 top-3 bg-ivory/95 px-2.5 py-1 text-[0.6rem] text-burgundy">{tagLabel[m.tags[0]]}</span>}
+        <div key={`${group}-${cat}-${q}`} className="mt-12 space-y-20">
+          {sections.map((s, si) => (
+            <section key={s.id} aria-labelledby={`cat-${s.id}`} className="animate-in fade-in slide-in-from-bottom-8 fill-mode-both duration-700" style={{ animationDelay: `${Math.min(si, 4) * 90}ms` }}>
+              <header className="grid items-end gap-6 md:grid-cols-[220px_1fr]">
+                <div className="group relative aspect-[4/3] overflow-hidden md:aspect-square">
+                  <img src={s.image} alt="" loading="lazy" className="size-full object-cover transition-transform duration-[1500ms] group-hover:scale-110" />
+                  <span className="absolute inset-0 ring-1 ring-inset ring-gold/40" />
                 </div>
-              </button>
-              <div className="mt-4 flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-2xl leading-tight">{m.name}</h3>
-                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{m.description}</p>
-                  <p className="mt-2 text-xs text-forest">{availabilityLabel[m.availability]}</p>
+                  <p className="eyebrow text-gold">{s.group === "drinks" ? "Drinks" : "Kitchen"} · {s.items.length} {s.items.length === 1 ? "item" : "items"}</p>
+                  <h2 id={`cat-${s.id}`} className="mt-2 text-5xl md:text-6xl">{s.name}</h2>
+                  <div className="mt-5 h-px origin-left animate-[rule_1.2s_ease-out_both] bg-gold" style={{ animationDelay: `${Math.min(si, 4) * 90 + 200}ms` }} />
                 </div>
-                <div className="flex shrink-0 flex-col items-end gap-2">
-                  <span className="font-medium tabular-nums">{formatPrice(m.price)}</span>
-                  <button disabled={m.availability === "unavailable"} onClick={() => addItem(m)} aria-label={`Add ${m.name}`}
-                    className="grid size-9 place-items-center rounded-full border border-burgundy text-burgundy transition-colors hover:bg-burgundy hover:text-primary-foreground disabled:opacity-40">
-                    <Plus className="size-4" />
-                  </button>
-                </div>
-              </div>
-            </li>
+              </header>
+              <ul className="mt-8 grid gap-x-14 md:grid-cols-2">
+                {s.items.map((m, i) => (
+                  <li key={m.id} className="animate-in fade-in slide-in-from-bottom-3 fill-mode-both duration-500" style={{ animationDelay: `${Math.min(si, 4) * 90 + 150 + Math.min(i, 14) * 35}ms` }}>
+                    <div role="button" tabIndex={0} onClick={() => setDetail(m)} onKeyDown={(e) => e.key === "Enter" && setDetail(m)}
+                      className="group flex cursor-pointer items-center gap-4 border-b border-border/70 py-4 transition-colors duration-300 hover:border-gold">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-baseline gap-3">
+                          <h3 className="font-display text-xl leading-tight transition-colors duration-300 group-hover:text-burgundy md:text-2xl">{m.name}</h3>
+                          {m.tags?.[0] && <span className="eyebrow shrink-0 text-[0.55rem] text-gold">{tagLabel[m.tags[0]]}</span>}
+                          <span aria-hidden className="mb-1 hidden flex-1 border-b border-dotted border-muted-foreground/40 sm:block" />
+                          <span className="ml-auto shrink-0 text-sm font-medium tabular-nums sm:ml-0">{priceText(m)}</span>
+                        </div>
+                        {m.description && <p className="mt-1 text-sm text-muted-foreground">{m.description}</p>}
+                      </div>
+                      <AddButton m={m} onAdd={addItem} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
           ))}
-        </ul>
+        </div>
       )}
-      <p className="mt-10 text-center text-xs text-muted-foreground">Sample menu and prices — to be confirmed by BIN RESTO. Availability varies daily.</p>
-
-      <Dialog open={!!detail} onOpenChange={(o) => !o && setDetail(null)}>
-        <DialogContent className="max-w-lg overflow-hidden p-0">
-          {detail && (
-            <>
-              <img src={detail.image} alt={detail.name} className="aspect-[4/3] w-full object-cover" />
-              <div className="space-y-3 p-6">
-                <p className="eyebrow text-gold">{categories.find((c) => c.id === detail.category)?.name}</p>
-                <DialogTitle className="font-display text-3xl font-medium">{detail.name}</DialogTitle>
-                <DialogDescription>{detail.description}</DialogDescription>
-                <p className="text-xs text-forest">{availabilityLabel[detail.availability]}</p>
-                <div className="flex items-center justify-between pt-2">
-                  <span className="font-display text-2xl">{formatPrice(detail.price)}</span>
-                  <Button disabled={detail.availability === "unavailable"} onClick={() => { addItem(detail); setDetail(null); }}>Add to order</Button>
-                </div>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+      <p className="mt-16 text-center text-xs text-muted-foreground">Prices in Rwandan francs. Availability may vary — please ask our team.</p>
+      <ItemDialog item={detail} onClose={() => setDetail(null)} />
     </div>
   );
 }

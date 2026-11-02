@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
 import samosa from "@/assets/samosa.jpg";
-import doughnut from "@/assets/doughnut.jpg";
+import doughnut from "@/assets/coffee.jpg";
 import burger from "@/assets/burger.jpg";
-import fries from "@/assets/fries.jpg";
+import fries from "@/assets/mains.jpg";
 import sandwich from "@/assets/sandwich.jpg";
 
 const frames = [
   { src: burger, alt: "Cheese burger", string: 40, tilt: -3, w: "w-40 md:w-52", dur: 6, x: "left-[2%]", top: "top-6" },
   { src: samosa, alt: "Golden samosas", string: 120, tilt: 4, w: "w-32 md:w-44", dur: 7.2, x: "left-[38%]", top: "top-6" },
-  { src: doughnut, alt: "Pistachio doughnuts", string: 20, tilt: 2, w: "w-36 md:w-48", dur: 5.4, x: "right-[2%]", top: "top-6" },
-  { src: fries, alt: "Golden fries", string: 250, tilt: -4, w: "hidden md:block md:w-40", dur: 6.6, x: "left-[10%]", top: "top-6" },
+  { src: doughnut, alt: "Cappuccino", string: 20, tilt: 2, w: "w-36 md:w-48", dur: 5.4, x: "right-[2%]", top: "top-6" },
+  { src: fries, alt: "Chicken curry", string: 250, tilt: -4, w: "hidden md:block md:w-40", dur: 6.6, x: "left-[10%]", top: "top-6" },
   { src: sandwich, alt: "Club sandwich", string: 210, tilt: 3, w: "hidden md:block md:w-44", dur: 7.8, x: "right-[12%]", top: "top-6" },
 ];
 
