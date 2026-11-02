@@ -1,75 +1,207 @@
 /**
- * BIN RESTO — editable menu.
- * SAMPLE CONTENT: names, descriptions and prices are placeholders until the owner
- * confirms the real menu. Add, rename or remove categories and items freely.
- * Images live in src/assets — replace files or point `image` to a new import.
+ * BIN RESTO — OFFICIAL MENU (prices in RWF as supplied by the owner).
+ * To edit: change a line in `sections` below — [name, price, description?].
+ * Use `null` as price when it isn't confirmed ("Ask for price" is shown).
+ * Add `{ id, name, group, image, items }` blocks to create new categories.
+ * Republish the site after editing so all visitors see the change.
  */
-import samosa from "@/assets/samosa.jpg";
-import doughnut from "@/assets/doughnut.jpg";
-import burger from "@/assets/burger.jpg";
-import sandwich from "@/assets/sandwich.jpg";
-import fries from "@/assets/fries.jpg";
-import dessert from "@/assets/dessert.jpg";
+import coffee from "@/assets/coffee.jpg";
+import tea from "@/assets/tea.jpg";
 import drink from "@/assets/drink.jpg";
-import hero from "@/assets/hero.jpg";
+import breakfast from "@/assets/breakfast.jpg";
+import mains from "@/assets/mains.jpg";
+import sandwich from "@/assets/sandwich.jpg";
+import burger from "@/assets/burger.jpg";
+import fries from "@/assets/fries.jpg";
+import samosa from "@/assets/samosa.jpg";
+import dessert from "@/assets/dessert.jpg";
 
 export type Availability = "available" | "ask" | "unavailable";
 export type Tag = "bestseller" | "offer" | "chef";
+export type Group = "drinks" | "food";
 
 export interface MenuItem {
   id: string;
   name: string;
   description: string;
-  price: number; // RWF — sample value
-  category: string; // must match a category id
+  price: number | null;
+  priceLabel?: string;
+  category: string;
   image: string;
   availability: Availability;
   tags?: Tag[];
+  featured?: boolean;
 }
 
-export const categories: { id: string; name: string }[] = [
-  { id: "samosas", name: "Samosas" },
-  { id: "amore", name: "Amore" }, // confirm exact spelling & products with the owner
-  { id: "doughnuts", name: "Doughnuts" },
-  { id: "fast-food", name: "Fast Food" },
-  { id: "burgers", name: "Burgers" },
-  { id: "sandwiches", name: "Sandwiches" },
-  { id: "fries", name: "Fries & Sides" },
-  { id: "snacks", name: "Snacks" },
-  { id: "desserts", name: "Desserts" },
-  { id: "beverages", name: "Beverages" },
-  { id: "offers", name: "Special Offers" },
-  { id: "chef", name: "Chef's Specials" },
+type Row = [name: string, price: number | null, description?: string, extra?: Partial<MenuItem>];
+interface Section { id: string; name: string; group: Group; image: string; items: Row[] }
+
+const chef: Partial<MenuItem> = { tags: ["chef"], featured: true };
+const pick: Partial<MenuItem> = { featured: true };
+
+const sections: Section[] = [
+  { id: "coffee", name: "Coffee", group: "drinks", image: coffee, items: [
+    ["Espresso", 2000], ["Espresso Macchiato", 3000], ["Espresso Con Panna", 3000], ["Espresso Romano", 3000],
+    ["Lungo", 3000], ["Regular Coffee", 3000], ["Cappuccino", 3000, undefined, pick], ["Café Latte", 3000],
+    ["Flat White", 3000], ["Cortado", 3000], ["Affogato", 3000], ["Café Au Lait", 3000],
+  ]},
+  { id: "flavored-coffee", name: "Flavored Coffee", group: "drinks", image: coffee, items: [
+    ["Caramel Latte / Cappuccino", 5500], ["Coconut Latte / Cappuccino", 5500], ["Caramel Macchiato", 5500],
+    ["Vanilla Latte / Cappuccino", 5500], ["Hazelnut Latte / Cappuccino", 5500], ["Strawberry Latte / Cappuccino", 5500],
+    ["Almond Latte / Cappuccino", 5500], ["Tiramisu Latte / Cappuccino", 5500], ["Oat Latte / Cappuccino", 6000],
+    ["Cinnamon Latte", 5500], ["Chai Latte", 5500], ["Ginger Latte", 5500],
+  ]},
+  { id: "special-coffee", name: "Special Coffee", group: "drinks", image: coffee, items: [
+    ["African Coffee", 3500, undefined, pick], ["Irish Coffee", 3500], ["Irish Coffee", 6000],
+    ["Irish Spice Coffee", 8000, undefined, chef], ["For Long Journey Coffee", 6000, undefined, chef],
+  ]},
+  { id: "iced-coffee", name: "Iced Coffee", group: "drinks", image: drink, items: [
+    ["Iced Americano", 3500], ["Iced Latte / Cappuccino", 4000], ["Iced Mocha", 5000], ["Iced Chocolate", 4500],
+    ["Iced Caramel Latte", 6000], ["Iced Coconut Latte", 6000], ["Iced Caramel Macchiato", 6000], ["Iced Vanilla Latte", 6000],
+    ["Iced Hazelnut Latte", 6000], ["Iced Cinnamon Latte", 6000], ["Iced Almond Latte", 5500],
+    ["Iced Tiramisu Latte / Cappuccino", 6000], ["Iced Oat Latte / Cappuccino", 6000], ["Iced Almond Latte / Cappuccino", 6500],
+    ["Iced Tiramisu Latte / Cappuccino (large)", 6500], ["Iced Oat Latte / Cappuccino (large)", 6500],
+    ["Iced White Mocha", 6000], ["Iced Strawberry Latte", 6000], ["Iced Soya Latte", 6500], ["V60", null],
+  ]},
+  { id: "kawaccino", name: "Blended Coffee (Kawaccino)", group: "drinks", image: drink, items: [
+    ["Caramel Drizzle Kawaccino", 7000, undefined, pick], ["Mochamania Kawaccino", 7000], ["White Mochamania Kawaccino", 7000],
+    ["Vanilla Drizzle Kawaccino", 7000], ["Strawberry Kawaccino", 7000],
+  ]},
+  { id: "frappuccino", name: "Frappuccino (Iced)", group: "drinks", image: drink, items: [
+    ["Banana Frappuccino", 5000], ["Strawberry Frappuccino", 5000], ["Passion Frappuccino", 5000],
+    ["Stafford Special Frappuccino", 6000, undefined, chef],
+  ]},
+  { id: "tea", name: "Tea", group: "drinks", image: tea, items: [
+    ["African Tea", 3000, undefined, pick], ["Spiced Tea", 3000], ["Ginger Tea", 3000], ["Cinnamon Tea", 3000],
+    ["Masala Tea", 3000], ["Lemon Tea", 3000], ["Umucyayicyayi Tea", 3000], ["Umwenya Tea", 6000],
+    ["Green Tea", 3000], ["Black Tea", 2500], ["Hibiscus Tea", 6000], ["Hot Chocolate", 3000],
+  ]},
+  { id: "iced-tea", name: "Iced Tea", group: "drinks", image: tea, items: [
+    ["Iced African Tea", 3500], ["Iced Spiced Tea", 3500], ["Iced Ginger Tea", 6000], ["Iced Cinnamon Tea", 3500],
+    ["Iced Masala Tea", 3500], ["Iced Lemon Tea", 3500], ["Iced Umucyayicyayi Tea", 3500], ["Iced Umwenya Tea", 3500],
+  ]},
+  { id: "milkshakes", name: "Milkshakes", group: "drinks", image: dessert, items: [
+    ["Oreo Milkshake", 6000, undefined, pick], ["Strawberry Shake", 6000], ["Chocolate Shake", 6000],
+    ["Double Shake", 6000], ["Peanut Butter Shake", 6000], ["Vanilla Milkshake", 6000],
+  ]},
+  { id: "smoothies", name: "Smoothies", group: "drinks", image: drink, items: [
+    ["Mango Breeze", 6000], ["Mango Banana Smoothie", 6000], ["Mango Pineapple Smoothie", 6000], ["Avocado Banana Smoothie", 6000],
+    ["Avocado Smoothie", 5000], ["Tropical Smoothie", 5000], ["Strawberry Smoothie", 5000],
+    ["Stafford Special Smoothie", 7000, undefined, chef], ["Banana Smoothie", 5000], ["Create Your Own Smoothie", 7000],
+  ]},
+  { id: "juices", name: "Fresh Juices", group: "drinks", image: drink, items: [
+    ["Mango Juice", 10000], ["Mango & Beetroot Juice", 10000], ["Pineapple Juice", 6000], ["Lemonade", 6000],
+    ["Papaya Juice", 6000], ["Apple Juice", 7000], ["Tree Tomato Juice", 6000], ["Passion Juice", 6000, undefined, pick],
+    ["Carrot Juice", 7000], ["Orange Juice", 7000], ["Avocado Juice", 6000], ["Cocktail Juice", 6000],
+    ["Beetroot & Pineapple Juice", 6000], ["Create Your Own Juice", 7000],
+  ]},
+  { id: "mojito", name: "Mojito", group: "drinks", image: drink, items: [
+    ["Passion Mojito", 7500], ["Strawberry Mojito", 7500], ["Mixed Mojito", 7500], ["Blue Mojito", 7500], ["Mint Mojito", 7500],
+  ]},
+  { id: "detox", name: "Healthy Detox Drinks", group: "drinks", image: tea, items: [
+    ["Detox Tea", 3000, "Ginger, honey, lemon, umwenya, umucyayicyayi, umuravumba.", { priceLabel: "3,000–3,500 RWF" }],
+    ["Cold Juice Detox", 7000, "Ginger, honey, lemon, apple, carrot, cucumber, mango, spinach, pineapple."],
+    ["Immunity Detox", 4000, "Ginger, honey, lemon, apple, carrot, cucumber, mango, spinach, pineapple."],
+  ]},
+  { id: "breakfast", name: "Breakfast", group: "food", image: breakfast, items: [
+    ["Rolex", 4000, "Plain omelet in chapatti.", pick],
+    ["Rolex with Chips", 6000, "Plain omelet in chapatti served with chips."],
+    ["Ham and Cheese Omelet", 5000, "Three-egg omelet with ham & cheese, served with toasted bread."],
+    ["French Toast", 4000, "Pan-fried sliced bread in beaten eggs."],
+    ["Plain Omelet", 4000],
+    ["Spanish Omelet", 5000, "Beaten eggs with diced onions, tomatoes and green peppers."],
+    ["Special Omelet", 7000, "Beaten eggs, chicken strips with chips, diced onions, tomatoes and green peppers."],
+    ["Fruit Cut Salad", 7000],
+  ]},
+  { id: "soup", name: "Soup", group: "food", image: mains, items: [
+    ["Mushroom Soup", 6000, "Fresh mushroom, onions, garlic, ginger and fresh cream, served with garlic bread."],
+    ["Vegetable Soup", 5000, "Carrots, onions, baby marrow, leeks, celery, pumpkin and fresh cream, served with garlic bread."],
+    ["Chicken and Matooke Broth", 8000, "Chicken cubes and boiled green bananas, veggies, garnished with coriander."],
+    ["Pumpkin Soup", 6000],
+  ]},
+  { id: "salad", name: "Salad", group: "food", image: mains, items: [
+    ["STA4 Salad", 10000, "Lettuce, cucumber, onions, carrots, tomatoes, beef & chicken strips, eggs, cheese batonnets, white dressing.", chef],
+    ["Fresh Garden Salad", 5000, "Lettuce, carrots, cucumber, tomatoes, avocados, white dressing and toasted bread."],
+    ["Chicken Salad", 10000, "Lettuce, carrots, cucumber, tomatoes, onions, avocados, chicken strips, grilled pineapple & banana."],
+    ["Chicken Caesar Salad", 8000, "Grilled chicken on soft lettuce, cheese, croutons, dressing of your choice."],
+  ]},
+  { id: "sandwich", name: "Sandwiches & Burgers", group: "food", image: sandwich, items: [
+    ["Chicken Club Sandwich", 12000, "Marinated chicken, cheese, onions, tomatoes, lettuce in toasted bread, served with chips.", pick],
+    ["Ham and Cheese Sandwich", 6000, "Ham & cheese melted in toast bread, served with chips or salad."],
+    ["Croque Madame", 5500, "Ham, melted cheese on sliced bread with optional fried egg."],
+    ["Vegetable Sandwich", 7000],
+    ["Chicken Tramezzini", 12000, "Marinated chicken, mayonnaise, avocado, cheese, tomatoes on focaccia, served with chips."],
+    ["Veggie Tramezzini", 7000, "Stir-fried vegetables and avocado on focaccia, served with chips."],
+    ["Steak Onion Sandwich", 10000, "Grilled beef fillet, caramelised onions, fresh tomato in toasted bread, served with chips."],
+    ["Beef Cheese Burger", 10000, "Beef patty, cheese, onions, tomatoes, lettuce, served with chips.", { featured: true, image: burger }],
+    ["Chicken Cheese Burger", 10000, "Chicken patty, cheese, onions, tomatoes, lettuce, served with chips.", { image: burger }],
+    ["Veggie Burger", 8000, "Veggie patty, caramelised onions, tomatoes, lettuce, served with chips.", { image: burger }],
+  ]},
+  { id: "pasta", name: "Pasta", group: "food", image: mains, items: [
+    ["Spaghetti Bolognese", 5000, "Spaghetti with seasoned bolognese sauce & melted cheese."],
+    ["Spaghetti / Penne Napolitana", 7500, "Spaghetti or penne with seasoned tomato sauce."],
+  ]},
+  { id: "indian", name: "Indian Dishes", group: "food", image: mains, items: [
+    ["Fish Curry", 12000, "Tender boneless fish in curry sauce, served with rice and chips."],
+    ["Chicken Curry", 12000, "Tender boneless chicken in curry sauce, served with rice and chips.", pick],
+    ["Veggies Curry", 6000, "Mixed vegetables in curry sauce, served with rice and chips."],
+  ]},
+  { id: "mains", name: "Lunch & Dinner", group: "food", image: mains, items: [
+    ["Grilled Tilapia Fillet", 12000, "Marinated tilapia fillet with chips, rice or boiled potatoes and vegetables.", pick],
+    ["Roasted Chicken Leg", 10000, "Marinated chicken leg with chips & vegetables."],
+    ["Grilled Beef Steak", 15000, "Boneless beef fillet with chips & vegetables.", chef],
+    ["Chicken / Fish Stroganoff", 12000, "Tender meat in creamy mushroom sauce & vegetables, with rice & chips or boiled potatoes."],
+    ["Chicken / Veg Stew (Gatogo)", 12000, "Chicken cooked with vegetables, garden peas and potatoes or green bananas."],
+    ["Beef / Chicken Brochette (2 pc)", 12000, "Grilled brochettes with mushroom, tomato or pepper sauce, served with chips."],
+    ["Chicken Wings", 10000, "6 pcs marinated fried wings served with chips & kachumbari.", { image: fries }],
+    ["Full Chicken", 30000],
+    ["Chicken Nuggets", 10000, undefined, { image: fries }],
+    ["Fish Finger", 10000, undefined, { image: fries }],
+  ]},
+  { id: "wraps", name: "Wraps", group: "food", image: breakfast, items: [
+    ["Chicken / Fish / Beef Wrap", 9000], ["Chicken Wrap Plain", 7000], ["Fish Wrap Plain", 9000],
+    ["Fish Wrap Plain with Chips", 10000], ["Beef Wrap Plain", 9000],
+    ["Stir-Fried Chicken / Beef Wrap", 10000, "Stir-fried vegetables with strips of meat, served with chips."],
+    ["Sautéed Vegetable Wrap", 6000, "Sautéed carrots, onions, zucchini, avocado & coriander in a fresh chapati."],
+  ]},
+  { id: "sides", name: "Side Orders", group: "food", image: fries, items: [
+    ["Side Salad", 2500], ["Steamed Rice", 2500], ["French Fries / Green Banana", 3000], ["Vegetables", 3000], ["Avocado Salad", 2000],
+  ]},
+  { id: "snacks", name: "Snacks & Bakery", group: "food", image: samosa, items: [
+    ["Chapatti", 1000], ["Beef / Veggie Samosa", 1000, undefined, pick], ["Cinnamon Rolls", 1000, undefined, { image: dessert }],
+    ["Sliced Banana Cake", 1000, undefined, { image: dessert }], ["Sliced Lemon Cake", 1000, undefined, { image: dessert }],
+    ["Marble Muffins", 1000, undefined, { image: dessert }], ["Sliced Carrot Cake", 1000, undefined, { image: dessert }],
+    ["Half Carrot Cake", 6000, undefined, { image: dessert }], ["Full Carrot Cake", 9000, undefined, { image: dessert }],
+    ["Half Lemon Cake", 6000, undefined, { image: dessert }], ["Full Lemon Cake", 9000, undefined, { image: dessert }],
+    ["STA4 Sweet Bread Sandwich", 2500],
+  ]},
 ];
 
-export const menuItems: MenuItem[] = [
-  { id: "beef-samosa", name: "Beef Samosa", description: "Crisp golden pastry filled with spiced minced beef and fresh herbs.", price: 500, category: "samosas", image: samosa, availability: "ask", tags: ["bestseller"] },
-  { id: "veg-samosa", name: "Vegetable Samosa", description: "Peas, potato and gentle spices, served with mint chutney.", price: 400, category: "samosas", image: samosa, availability: "ask" },
-  { id: "amore-box", name: "Amore Sweet Box", description: "A curated box of house sweet treats — contents confirmed daily.", price: 3000, category: "amore", image: doughnut, availability: "ask", tags: ["offer"] },
-  { id: "choc-doughnut", name: "Chocolate Pistachio Doughnut", description: "Soft brioche ring, dark chocolate glaze, roasted pistachio.", price: 1200, category: "doughnuts", image: doughnut, availability: "ask", tags: ["bestseller"] },
-  { id: "vanilla-doughnut", name: "Vanilla Glaze Doughnut", description: "Light, airy and finished with a silky vanilla glaze.", price: 1000, category: "doughnuts", image: doughnut, availability: "ask" },
-  { id: "resto-platter", name: "Resto Fast Platter", description: "Burger, fries and samosas — a generous plate to share.", price: 8500, category: "fast-food", image: hero, availability: "ask", tags: ["offer"] },
-  { id: "classic-burger", name: "Classic Cheese Burger", description: "Grilled beef patty, melted cheddar, caramelised onion, brioche bun.", price: 5500, category: "burgers", image: burger, availability: "ask", tags: ["bestseller"] },
-  { id: "double-burger", name: "Double Stack Burger", description: "Two patties, double cheese, house sauce. For the truly hungry.", price: 7500, category: "burgers", image: burger, availability: "ask", tags: ["chef"] },
-  { id: "club-sandwich", name: "Club Sandwich", description: "Toasted layers of chicken, crisp bacon, tomato and lettuce.", price: 4500, category: "sandwiches", image: sandwich, availability: "ask", tags: ["bestseller"] },
-  { id: "chicken-sandwich", name: "Grilled Chicken Sandwich", description: "Herb-marinated chicken, garlic mayo, fresh greens.", price: 4000, category: "sandwiches", image: sandwich, availability: "ask" },
-  { id: "golden-fries", name: "Golden Fries", description: "Hand-cut and twice-fried, served with two dips.", price: 2000, category: "fries", image: fries, availability: "ask" },
-  { id: "snack-trio", name: "Snack Trio", description: "Samosa, mini fries and a dip — the perfect afternoon bite.", price: 2500, category: "snacks", image: samosa, availability: "ask" },
-  { id: "choc-cake", name: "Dark Chocolate Gâteau", description: "Layered chocolate mousse cake with berries and gold leaf.", price: 3500, category: "desserts", image: dessert, availability: "ask", tags: ["chef"] },
-  { id: "passion-juice", name: "Fresh Passion Juice", description: "Pressed passion fruit with a hint of mint.", price: 1500, category: "beverages", image: drink, availability: "ask" },
-  { id: "iced-coffee", name: "Iced Rwandan Coffee", description: "Rwandan coffee poured over ice and fresh milk.", price: 2500, category: "beverages", image: drink, availability: "ask", tags: ["bestseller"] },
-  { id: "duo-offer", name: "Burger & Juice Duo", description: "Classic burger with a fresh juice — sample promotion.", price: 6500, category: "offers", image: burger, availability: "ask", tags: ["offer"] },
-  { id: "chef-plate", name: "Chef's Signature Plate", description: "The chef's daily creation — ask our team what's on today.", price: 9000, category: "chef", image: hero, availability: "ask", tags: ["chef"] },
-];
+const slug = (s: string) => s.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+export const categories = sections.map(({ id, name, group, image }) => ({ id, name, group, image }));
+
+export const menuItems: MenuItem[] = sections.flatMap((s) =>
+  s.items.map(([name, price, description, extra], i) => ({
+    id: `${s.id}-${slug(name)}-${i}`,
+    name,
+    price,
+    description: description ?? "",
+    category: s.id,
+    image: s.image,
+    availability: price === null ? "ask" : "available",
+    ...extra,
+  })),
+);
 
 export const availabilityLabel: Record<Availability, string> = {
-  available: "Available today",
-  ask: "Ask for today's availability",
+  available: "On the menu",
+  ask: "Ask our team",
   unavailable: "Not available",
 };
 
 export const tagLabel: Record<Tag, string> = {
-  bestseller: "Bestseller",
+  bestseller: "Favourite",
   offer: "Special offer",
-  chef: "Chef's special",
+  chef: "House special",
 };
