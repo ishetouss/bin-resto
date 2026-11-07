@@ -2,23 +2,22 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import hero from "@/assets/hero.jpg";
 import samosa from "@/assets/samosa.jpg";
-import doughnut from "@/assets/doughnut.jpg";
 import burger from "@/assets/burger.jpg";
 import sandwich from "@/assets/sandwich.jpg";
 import fries from "@/assets/fries.jpg";
-import dessert from "@/assets/dessert.jpg";
 import drink from "@/assets/drink.jpg";
 import coffee from "@/assets/coffee.jpg";
 import mains from "@/assets/mains.jpg";
 import { Button } from "@/components/ui/button";
 import { HangingFrames } from "@/components/site/HangingFrames";
 import { Reveal } from "@/components/site/Reveal";
-import { MenuHighlights, priceText } from "@/components/site/MenuExplorer";
 import venue from "@/assets/venue-night.jpg.asset.json";
-import { QrShare } from "@/components/site/QrShare";
-import { ServiceArea, ContactSection } from "@/components/site/ContactBlocks";
+import { MenuHighlights, priceText } from "@/components/site/MenuExplorer";
+import { ShareBlock } from "@/components/site/ShareBlock";
+import { ContactSection } from "@/components/site/ContactBlocks";
 import { menuItems, tagLabel } from "@/config/menuData";
-import { whatsappLink } from "@/config/siteConfig";
+import { siteConfig } from "@/config/siteConfig";
+import { Coffee } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { toast } from "sonner";
 
@@ -26,9 +25,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Stafford Brewers — Exceptional Taste. Beautiful Moments." },
-      { name: "description", content: "Samosas, doughnuts, burgers and chef's specials. Stafford Brewers serves memorable food from Kigali to the Southern Province." },
+      { name: "description", content: "Carefully brewed coffee, fresh juices and generous plates at Stafford Brewers, Musambira, Kamonyi. Open 05:00–23:00." },
       { property: "og:title", content: "Stafford Brewers — Exceptional Taste. Beautiful Moments." },
-      { property: "og:description", content: "Explore our menu, book a table and share the moment — from Kigali to the Southern Province." },
+      { property: "og:description", content: "Coffee, Grab & Go, fresh juices and generous plates in Musambira, Kamonyi." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -37,7 +36,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const wa = whatsappLink("Hello Stafford Brewers, I'd like to order.");
   const parallax = useRef<HTMLImageElement>(null);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -53,24 +51,42 @@ function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl gap-6 px-5 pb-16 pt-10 md:grid-cols-[1.05fr_1fr] md:gap-10 md:px-8 md:pt-16">
-          <div className="relative z-10 flex flex-col justify-center">
-            <p className="eyebrow animate-in fade-in slide-in-from-bottom-2 text-gold duration-700">Kigali · Southern Province</p>
-            <h1 className="mt-5 text-[3.4rem] leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-1000 md:text-[5.6rem]">
-              Exceptional Taste.<br /><em className="text-burgundy">Beautiful Moments.</em>
-            </h1>
-            <p className="mt-6 max-w-md text-lg text-muted-foreground animate-in fade-in duration-1000 [animation-delay:300ms] fill-mode-both">
-              Carefully brewed coffee, fresh juices and generous plates — served with warmth, made to be remembered.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3 animate-in fade-in slide-in-from-bottom-2 duration-1000 [animation-delay:500ms] fill-mode-both">
-              <Button asChild size="lg"><Link to="/menu">Explore our menu</Link></Button>
-              <Button asChild size="lg" variant="outline"><Link to="/reserve">Book a table</Link></Button>
-              {wa && <Button asChild size="lg" variant="ghost"><a href={wa} target="_blank" rel="noopener noreferrer">Order on WhatsApp</a></Button>}
-            </div>
+      <section className="section-dark relative flex min-h-[100svh] items-end overflow-hidden">
+        <img src={venue.url} alt="The Stafford Brewers terrace lit up at night" width={689} height={532} className="absolute inset-0 size-full scale-105 object-cover animate-in fade-in zoom-in-110 duration-[2000ms]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/55 to-espresso/20" />
+        <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-32 md:px-8 md:pb-28">
+          <p className="eyebrow animate-in fade-in slide-in-from-bottom-2 text-gold duration-700">{siteConfig.businessName} · {siteConfig.location}</p>
+          <h1 className="mt-5 text-[3.2rem] leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-1000 md:text-[6rem]">
+            Exceptional Taste.<br /><em className="text-gold-soft">Beautiful Moments.</em>
+          </h1>
+          <p className="mt-6 max-w-md text-lg text-ivory/85 animate-in fade-in duration-1000 [animation-delay:300ms] fill-mode-both">
+            Carefully brewed coffee, fresh juices and generous plates — served with warmth, made to be remembered.
+          </p>
+          <div className="mt-9 flex flex-wrap gap-3 animate-in fade-in slide-in-from-bottom-2 duration-1000 [animation-delay:500ms] fill-mode-both">
+            <Button asChild size="lg" variant="gold"><Link to="/menu">Explore our menu</Link></Button>
+            <Button asChild size="lg" variant="ivory"><Link to="/reserve">Book a table</Link></Button>
           </div>
-          <HangingFrames />
         </div>
+      </section>
+
+      {/* SERVICES STRIP */}
+      <section className="border-b bg-cream/60">
+        <ul className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-5 py-5">
+          {siteConfig.services.map((sv) => (
+            <li key={sv} className="eyebrow flex items-center gap-2 text-espresso"><Coffee className="size-4 text-gold" /> {sv}</li>
+          ))}
+        </ul>
+      </section>
+
+      {/* SIGNATURE HANGING GALLERY */}
+      <section className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-20 md:grid-cols-[1fr_1.2fr] md:px-8">
+        <Reveal>
+          <p className="eyebrow text-gold">Grab &amp; Go</p>
+          <h2 className="mt-3 text-5xl leading-tight">Your coffee, ready when you are.</h2>
+          <p className="mt-4 max-w-md text-muted-foreground">On your way to work or a long journey? Every coffee on our menu is available as Grab &amp; Go — brewed fresh, handed over with a smile.</p>
+          <Button asChild className="mt-8"><Link to="/menu">See the coffee menu</Link></Button>
+        </Reveal>
+        <HangingFrames />
       </section>
 
       {/* CINEMATIC BAND */}
@@ -195,7 +211,7 @@ function Home() {
       <section className="mx-auto max-w-7xl px-5 py-24 md:px-8">
         <Reveal className="mb-10"><p className="eyebrow text-gold">Gallery</p><h2 className="mt-3 text-5xl">From our kitchen</h2></Reveal>
         <div className="grid auto-rows-[160px] grid-cols-2 gap-3 md:auto-rows-[220px] md:grid-cols-4">
-          {[[coffee, "md:row-span-2", "Cappuccino"], [fries, "", "Fries"], [mains, "md:col-span-2", "Curry and grilled tilapia"], [samosa, "", "Samosas"], [burger, "row-span-2 md:row-span-1", "Burger"], [dessert, "", "Dessert"], [drink, "", "Drinks"]].map(([src, cls, alt], i) => (
+          {[[coffee, "md:row-span-2", "Cappuccino"], [fries, "", "Fries"], [mains, "md:col-span-2", "Curry and grilled tilapia"], [samosa, "", "Samosas"], [burger, "row-span-2 md:row-span-1", "Burger"], [drink, "", "Drinks"]].map(([src, cls, alt], i) => (
             <Reveal key={i} delay={i * 60} className={`group overflow-hidden ${cls}`}>
               <img src={src} alt={alt} loading="lazy" className="size-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110" />
             </Reveal>
@@ -203,16 +219,8 @@ function Home() {
         </div>
       </section>
 
-      {/* QR */}
-      <section className="bg-cream/50 py-24"><div className="mx-auto max-w-6xl px-5 md:px-8"><QrShare /></div></section>
-
-      {/* SERVICE AREA */}
-      <section className="section-dark py-24">
-        <div className="mx-auto max-w-6xl px-5 md:px-8">
-          <Reveal className="mb-12"><p className="eyebrow text-gold">Where we serve</p><h2 className="mt-3 text-5xl md:text-6xl">From Kigali to the Southern Province</h2></Reveal>
-          <ServiceArea />
-        </div>
-      </section>
+      {/* SHARE */}
+      <section className="bg-cream/50 py-20"><div className="px-5"><ShareBlock /></div></section>
 
       {/* CONTACT */}
       <section className="mx-auto max-w-7xl px-5 py-24 md:px-8"><ContactSection /></section>
