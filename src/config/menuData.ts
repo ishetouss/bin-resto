@@ -32,7 +32,7 @@ export interface MenuItem {
   featured?: boolean;
 }
 
-type Row = [name: string, price: number | null, description?: string, extra?: Partial<MenuItem>];
+type Row = [name: string, price: number | null, description?: string | undefined, extra?: Partial<MenuItem>];
 interface Section { id: string; name: string; group: Group; image: string; note?: string; items: Row[] }
 
 const chef: Partial<MenuItem> = { tags: ["chef"], featured: true };
@@ -152,10 +152,10 @@ const sections: Section[] = [
     ["Chicken / Fish Stroganoff", 12000, "Tender meat in creamy mushroom sauce & vegetables, with rice & chips or boiled potatoes."],
     ["Chicken / Veg Stew (Gatogo)", 12000, "Chicken cooked with vegetables, garden peas and potatoes or green bananas."],
     ["Beef / Chicken Brochette (2 pc)", 12000, "Grilled brochettes with mushroom, tomato or pepper sauce, served with chips."],
-    ["Chicken Wings", 10000, "6 pcs marinated fried wings served with chips & kachumbari.", undefined],
+    ["Chicken Wings", 10000, "6 pcs marinated fried wings served with chips & kachumbari."],
     ["Full Chicken", 30000],
-    ["Chicken Nuggets", 10000, undefined, undefined],
-    ["Fish Finger", 10000, undefined, undefined],
+    ["Chicken Nuggets", 10000],
+    ["Fish Finger", 10000],
   ]},
   { id: "wraps", name: "Wraps", group: "food", image: "", items: [
     ["Chicken / Fish / Beef Wrap", 9000], ["Chicken Wrap Plain", 7000], ["Fish Wrap Plain", 9000],
@@ -167,11 +167,11 @@ const sections: Section[] = [
     ["Side Salad", 2500], ["Steamed Rice", 2500], ["French Fries / Green Banana", 3000], ["Vegetables", 3000], ["Avocado Salad", 2000],
   ]},
   { id: "snacks", name: "Snacks & Bakery", group: "food", image: samosa, items: [
-    ["Chapatti", 1000], ["Beef / Veggie Samosa", 1000, undefined, pick], ["Cinnamon Rolls", 1000, undefined],
-    ["Sliced Banana Cake", 1000, undefined], ["Sliced Lemon Cake", 1000, undefined],
-    ["Marble Muffins", 1000, undefined], ["Sliced Carrot Cake", 1000, undefined],
-    ["Half Carrot Cake", 6000, undefined], ["Full Carrot Cake", 9000, undefined],
-    ["Half Lemon Cake", 6000, undefined], ["Full Lemon Cake", 9000, undefined],
+    ["Chapatti", 1000], ["Beef / Veggie Samosa", 1000, undefined, pick], ["Cinnamon Rolls", 1000],
+    ["Sliced Banana Cake", 1000], ["Sliced Lemon Cake", 1000],
+    ["Marble Muffins", 1000], ["Sliced Carrot Cake", 1000],
+    ["Half Carrot Cake", 6000], ["Full Carrot Cake", 9000],
+    ["Half Lemon Cake", 6000], ["Full Lemon Cake", 9000],
     ["STA4 Sweet Bread Sandwich", 2500],
   ]},
 ];
