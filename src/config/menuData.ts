@@ -14,7 +14,6 @@ import sandwich from "@/assets/sandwich.jpg";
 import burger from "@/assets/burger.jpg";
 import fries from "@/assets/fries.jpg";
 import samosa from "@/assets/samosa.jpg";
-import dessert from "@/assets/dessert.jpg";
 
 export type Availability = "available" | "ask" | "unavailable";
 export type Tag = "bestseller" | "offer" | "chef";
@@ -34,13 +33,13 @@ export interface MenuItem {
 }
 
 type Row = [name: string, price: number | null, description?: string, extra?: Partial<MenuItem>];
-interface Section { id: string; name: string; group: Group; image: string; items: Row[] }
+interface Section { id: string; name: string; group: Group; image: string; note?: string; items: Row[] }
 
 const chef: Partial<MenuItem> = { tags: ["chef"], featured: true };
 const pick: Partial<MenuItem> = { featured: true };
 
 const sections: Section[] = [
-  { id: "coffee", name: "Coffee", group: "drinks", image: coffee, items: [
+  { id: "coffee", name: "Coffee", group: "drinks", image: coffee, note: "All coffees available as Grab & Go", items: [
     ["Espresso", 2000], ["Espresso Macchiato", 3000], ["Espresso Con Panna", 3000], ["Espresso Romano", 3000],
     ["Lungo", 3000], ["Regular Coffee", 3000], ["Cappuccino", 3000, undefined, pick], ["Café Latte", 3000],
     ["Flat White", 3000], ["Cortado", 3000], ["Affogato", 3000], ["Café Au Lait", 3000],
@@ -55,7 +54,7 @@ const sections: Section[] = [
     ["African Coffee", 3500, undefined, pick], ["Irish Coffee", 3500], ["Irish Coffee", 6000],
     ["Irish Spice Coffee", 8000, undefined, chef], ["For Long Journey Coffee", 6000, undefined, chef],
   ]},
-  { id: "iced-coffee", name: "Iced Coffee", group: "drinks", image: drink, items: [
+  { id: "iced-coffee", name: "Iced Coffee", group: "drinks", image: drink, note: "Grab & Go available", items: [
     ["Iced Americano", 3500], ["Iced Latte / Cappuccino", 4000], ["Iced Mocha", 5000], ["Iced Chocolate", 4500],
     ["Iced Caramel Latte", 6000], ["Iced Coconut Latte", 6000], ["Iced Caramel Macchiato", 6000], ["Iced Vanilla Latte", 6000],
     ["Iced Hazelnut Latte", 6000], ["Iced Cinnamon Latte", 6000], ["Iced Almond Latte", 5500],
@@ -63,11 +62,11 @@ const sections: Section[] = [
     ["Iced Tiramisu Latte / Cappuccino (large)", 6500], ["Iced Oat Latte / Cappuccino (large)", 6500],
     ["Iced White Mocha", 6000], ["Iced Strawberry Latte", 6000], ["Iced Soya Latte", 6500], ["V60", null],
   ]},
-  { id: "kawaccino", name: "Blended Coffee (Kawaccino)", group: "drinks", image: drink, items: [
+  { id: "kawaccino", name: "Blended Coffee (Kawaccino)", group: "drinks", image: "", items: [
     ["Caramel Drizzle Kawaccino", 7000, undefined, pick], ["Mochamania Kawaccino", 7000], ["White Mochamania Kawaccino", 7000],
     ["Vanilla Drizzle Kawaccino", 7000], ["Strawberry Kawaccino", 7000],
   ]},
-  { id: "frappuccino", name: "Frappuccino (Iced)", group: "drinks", image: drink, items: [
+  { id: "frappuccino", name: "Frappuccino (Iced)", group: "drinks", image: "", items: [
     ["Banana Frappuccino", 5000], ["Strawberry Frappuccino", 5000], ["Passion Frappuccino", 5000],
     ["Stafford Special Frappuccino", 6000, undefined, chef],
   ]},
@@ -80,11 +79,11 @@ const sections: Section[] = [
     ["Iced African Tea", 3500], ["Iced Spiced Tea", 3500], ["Iced Ginger Tea", 6000], ["Iced Cinnamon Tea", 3500],
     ["Iced Masala Tea", 3500], ["Iced Lemon Tea", 3500], ["Iced Umucyayicyayi Tea", 3500], ["Iced Umwenya Tea", 3500],
   ]},
-  { id: "milkshakes", name: "Milkshakes", group: "drinks", image: dessert, items: [
+  { id: "milkshakes", name: "Milkshakes", group: "drinks", image: "", items: [
     ["Oreo Milkshake", 6000, undefined, pick], ["Strawberry Shake", 6000], ["Chocolate Shake", 6000],
     ["Double Shake", 6000], ["Peanut Butter Shake", 6000], ["Vanilla Milkshake", 6000],
   ]},
-  { id: "smoothies", name: "Smoothies", group: "drinks", image: drink, items: [
+  { id: "smoothies", name: "Smoothies", group: "drinks", image: "", items: [
     ["Mango Breeze", 6000], ["Mango Banana Smoothie", 6000], ["Mango Pineapple Smoothie", 6000], ["Avocado Banana Smoothie", 6000],
     ["Avocado Smoothie", 5000], ["Tropical Smoothie", 5000], ["Strawberry Smoothie", 5000],
     ["Stafford Special Smoothie", 7000, undefined, chef], ["Banana Smoothie", 5000], ["Create Your Own Smoothie", 7000],
@@ -95,10 +94,10 @@ const sections: Section[] = [
     ["Carrot Juice", 7000], ["Orange Juice", 7000], ["Avocado Juice", 6000], ["Cocktail Juice", 6000],
     ["Beetroot & Pineapple Juice", 6000], ["Create Your Own Juice", 7000],
   ]},
-  { id: "mojito", name: "Mojito", group: "drinks", image: drink, items: [
+  { id: "mojito", name: "Mojito", group: "drinks", image: "", items: [
     ["Passion Mojito", 7500], ["Strawberry Mojito", 7500], ["Mixed Mojito", 7500], ["Blue Mojito", 7500], ["Mint Mojito", 7500],
   ]},
-  { id: "detox", name: "Healthy Detox Drinks", group: "drinks", image: tea, items: [
+  { id: "detox", name: "Healthy Detox Drinks", group: "drinks", image: "", items: [
     ["Detox Tea", 3000, "Ginger, honey, lemon, umwenya, umucyayicyayi, umuravumba.", { priceLabel: "3,000–3,500 RWF" }],
     ["Cold Juice Detox", 7000, "Ginger, honey, lemon, apple, carrot, cucumber, mango, spinach, pineapple."],
     ["Immunity Detox", 4000, "Ginger, honey, lemon, apple, carrot, cucumber, mango, spinach, pineapple."],
@@ -113,13 +112,13 @@ const sections: Section[] = [
     ["Special Omelet", 7000, "Beaten eggs, chicken strips with chips, diced onions, tomatoes and green peppers."],
     ["Fruit Cut Salad", 7000],
   ]},
-  { id: "soup", name: "Soup", group: "food", image: mains, items: [
+  { id: "soup", name: "Soup", group: "food", image: "", items: [
     ["Mushroom Soup", 6000, "Fresh mushroom, onions, garlic, ginger and fresh cream, served with garlic bread."],
     ["Vegetable Soup", 5000, "Carrots, onions, baby marrow, leeks, celery, pumpkin and fresh cream, served with garlic bread."],
     ["Chicken and Matooke Broth", 8000, "Chicken cubes and boiled green bananas, veggies, garnished with coriander."],
     ["Pumpkin Soup", 6000],
   ]},
-  { id: "salad", name: "Salad", group: "food", image: mains, items: [
+  { id: "salad", name: "Salad", group: "food", image: "", items: [
     ["STA4 Salad", 10000, "Lettuce, cucumber, onions, carrots, tomatoes, beef & chicken strips, eggs, cheese batonnets, white dressing.", chef],
     ["Fresh Garden Salad", 5000, "Lettuce, carrots, cucumber, tomatoes, avocados, white dressing and toasted bread."],
     ["Chicken Salad", 10000, "Lettuce, carrots, cucumber, tomatoes, onions, avocados, chicken strips, grilled pineapple & banana."],
@@ -137,7 +136,7 @@ const sections: Section[] = [
     ["Chicken Cheese Burger", 10000, "Chicken patty, cheese, onions, tomatoes, lettuce, served with chips.", { image: burger }],
     ["Veggie Burger", 8000, "Veggie patty, caramelised onions, tomatoes, lettuce, served with chips.", { image: burger }],
   ]},
-  { id: "pasta", name: "Pasta", group: "food", image: mains, items: [
+  { id: "pasta", name: "Pasta", group: "food", image: "", items: [
     ["Spaghetti Bolognese", 5000, "Spaghetti with seasoned bolognese sauce & melted cheese."],
     ["Spaghetti / Penne Napolitana", 7500, "Spaghetti or penne with seasoned tomato sauce."],
   ]},
@@ -153,12 +152,12 @@ const sections: Section[] = [
     ["Chicken / Fish Stroganoff", 12000, "Tender meat in creamy mushroom sauce & vegetables, with rice & chips or boiled potatoes."],
     ["Chicken / Veg Stew (Gatogo)", 12000, "Chicken cooked with vegetables, garden peas and potatoes or green bananas."],
     ["Beef / Chicken Brochette (2 pc)", 12000, "Grilled brochettes with mushroom, tomato or pepper sauce, served with chips."],
-    ["Chicken Wings", 10000, "6 pcs marinated fried wings served with chips & kachumbari.", { image: fries }],
+    ["Chicken Wings", 10000, "6 pcs marinated fried wings served with chips & kachumbari.", undefined],
     ["Full Chicken", 30000],
-    ["Chicken Nuggets", 10000, undefined, { image: fries }],
-    ["Fish Finger", 10000, undefined, { image: fries }],
+    ["Chicken Nuggets", 10000, undefined, undefined],
+    ["Fish Finger", 10000, undefined, undefined],
   ]},
-  { id: "wraps", name: "Wraps", group: "food", image: breakfast, items: [
+  { id: "wraps", name: "Wraps", group: "food", image: "", items: [
     ["Chicken / Fish / Beef Wrap", 9000], ["Chicken Wrap Plain", 7000], ["Fish Wrap Plain", 9000],
     ["Fish Wrap Plain with Chips", 10000], ["Beef Wrap Plain", 9000],
     ["Stir-Fried Chicken / Beef Wrap", 10000, "Stir-fried vegetables with strips of meat, served with chips."],
@@ -168,18 +167,18 @@ const sections: Section[] = [
     ["Side Salad", 2500], ["Steamed Rice", 2500], ["French Fries / Green Banana", 3000], ["Vegetables", 3000], ["Avocado Salad", 2000],
   ]},
   { id: "snacks", name: "Snacks & Bakery", group: "food", image: samosa, items: [
-    ["Chapatti", 1000], ["Beef / Veggie Samosa", 1000, undefined, pick], ["Cinnamon Rolls", 1000, undefined, { image: dessert }],
-    ["Sliced Banana Cake", 1000, undefined, { image: dessert }], ["Sliced Lemon Cake", 1000, undefined, { image: dessert }],
-    ["Marble Muffins", 1000, undefined, { image: dessert }], ["Sliced Carrot Cake", 1000, undefined, { image: dessert }],
-    ["Half Carrot Cake", 6000, undefined, { image: dessert }], ["Full Carrot Cake", 9000, undefined, { image: dessert }],
-    ["Half Lemon Cake", 6000, undefined, { image: dessert }], ["Full Lemon Cake", 9000, undefined, { image: dessert }],
+    ["Chapatti", 1000], ["Beef / Veggie Samosa", 1000, undefined, pick], ["Cinnamon Rolls", 1000, undefined],
+    ["Sliced Banana Cake", 1000, undefined], ["Sliced Lemon Cake", 1000, undefined],
+    ["Marble Muffins", 1000, undefined], ["Sliced Carrot Cake", 1000, undefined],
+    ["Half Carrot Cake", 6000, undefined], ["Full Carrot Cake", 9000, undefined],
+    ["Half Lemon Cake", 6000, undefined], ["Full Lemon Cake", 9000, undefined],
     ["STA4 Sweet Bread Sandwich", 2500],
   ]},
 ];
 
 const slug = (s: string) => s.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-export const categories = sections.map(({ id, name, group, image }) => ({ id, name, group, image }));
+export const categories = sections.map(({ id, name, group, image, note }) => ({ id, name, group, image, note }));
 
 export const menuItems: MenuItem[] = sections.flatMap((s) =>
   s.items.map(([name, price, description, extra], i) => ({
