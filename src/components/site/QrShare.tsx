@@ -40,7 +40,7 @@ export function QrShare() {
   const print = () => {
     const w = window.open("", "_blank");
     if (!w) { toast.error("Please allow pop-ups to print."); return; }
-    w.document.write(`<html><head><title>BIN RESTO menu QR</title></head><body style="font-family:serif;text-align:center;padding:40px"><h1 style="letter-spacing:.2em">BIN RESTO</h1><p>Scan to explore our menu</p><img src="${dataUrl}" style="width:320px"/><p style="font-size:12px">${url}</p><script>window.onload=()=>window.print()</script></body></html>`);
+    w.document.write(`<html><head><title>Stafford Brewers menu QR</title></head><body style="font-family:serif;text-align:center;padding:40px"><h1 style="letter-spacing:.2em">Stafford Brewers</h1><p>Scan to explore our menu</p><img src="${dataUrl}" style="width:320px"/><p style="font-size:12px">${url}</p><script>window.onload=()=>window.print()</script></body></html>`);
     w.document.close();
   };
   const copy = async () => {
@@ -54,9 +54,9 @@ export function QrShare() {
     }
   };
   const share = async () => {
-    try { await navigator.share({ title: "BIN RESTO menu", text: "Explore the BIN RESTO menu", url }); } catch {}
+    try { await navigator.share({ title: "Stafford Brewers menu", text: "Explore the Stafford Brewers menu", url }); } catch {}
   };
-  const waShare = `https://wa.me/?text=${encodeURIComponent(`Explore the BIN RESTO menu: ${url}`)}`;
+  const waShare = `https://wa.me/?text=${encodeURIComponent(`Explore the Stafford Brewers menu: ${url}`)}`;
 
   return (
     <div className="grid items-center gap-12 md:grid-cols-2">
@@ -67,7 +67,7 @@ export function QrShare() {
           {error ? (
             <div className="p-4 text-sm text-muted-foreground">QR code couldn't be generated. <button className="underline" onClick={generate}>Try again</button></div>
           ) : dataUrl ? (
-            <img src={dataUrl} alt="QR code linking to the BIN RESTO menu" className="w-full animate-in zoom-in-95 fade-in duration-500" />
+            <img src={dataUrl} alt="QR code linking to the Stafford Brewers menu" className="w-full animate-in zoom-in-95 fade-in duration-500" />
           ) : (
             <div className="size-full animate-pulse bg-muted" />
           )}

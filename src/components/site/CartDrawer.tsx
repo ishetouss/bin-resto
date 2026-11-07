@@ -66,7 +66,7 @@ export function CartDrawer() {
           <div className="space-y-3 border-t px-6 py-5">
             <div className="flex justify-between text-sm text-muted-foreground"><span>Subtotal</span><span className="tabular-nums">{formatPrice(totals.subtotal)}</span></div>
             <div className="flex justify-between font-display text-2xl"><span>Total</span><span className="tabular-nums">{formatPrice(totals.total)}</span></div>
-            <p className="text-xs text-muted-foreground">Sample prices. Final price and availability are confirmed by BIN RESTO.</p>
+            <p className="text-xs text-muted-foreground">Sample prices. Final price and availability are confirmed by Stafford Brewers.</p>
             {!review ? (
               <div className="flex gap-2">
                 <Button variant="ghost" onClick={clear}>Clear</Button>

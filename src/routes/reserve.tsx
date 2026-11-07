@@ -5,9 +5,9 @@ import dessert from "@/assets/dessert.jpg";
 export const Route = createFileRoute("/reserve")({
   head: () => ({
     meta: [
-      { title: "Book a Table — BIN RESTO" },
-      { name: "description", content: "Send a table booking request to BIN RESTO." },
-      { property: "og:title", content: "Book Your Reservation at BIN RESTO" },
+      { title: "Book a Table — Stafford Brewers" },
+      { name: "description", content: "Send a table booking request to Stafford Brewers." },
+      { property: "og:title", content: "Book Your Reservation at Stafford Brewers" },
       { property: "og:description", content: "Choose your date, time and guests — we'll confirm your table." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/reserve")({
       <div>
         <p className="eyebrow text-gold">Reservations</p>
         <h1 className="mt-3 text-6xl">Book Your Reservation</h1>
-        <p className="mt-4 text-muted-foreground">Send us your preferred date and time. This is a booking <em>request</em> — your table is confirmed once BIN RESTO replies.</p>
+        <p className="mt-4 text-muted-foreground">Send us your preferred date and time. This is a booking <em>request</em> — your table is confirmed once Stafford Brewers replies.</p>
         <img src={dessert} alt="Chocolate gâteau" loading="lazy" className="mt-10 hidden aspect-[4/5] w-full object-cover shadow-frame md:block" />
       </div>
       <div className="bg-card p-6 shadow-soft ring-1 ring-border md:p-10"><ReservationForm /></div>

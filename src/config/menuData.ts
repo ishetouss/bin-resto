@@ -1,5 +1,5 @@
 /**
- * BIN RESTO — OFFICIAL MENU (prices in RWF as supplied by the owner).
+ * Stafford Brewers — OFFICIAL MENU (prices in RWF as supplied by the owner).
  * To edit: change a line in `sections` below — [name, price, description?].
  * Use `null` as price when it isn't confirmed ("Ask for price" is shown).
  * Add `{ id, name, group, image, items }` blocks to create new categories.

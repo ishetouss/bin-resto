@@ -1,24 +1,19 @@
 /**
- * BIN RESTO — central business configuration.
+ * Stafford Brewers — central business configuration.
  * Edit ONLY this file to change contact details, links and service areas.
  * Leave a value as "" to hide the related button automatically.
  * After editing, rebuild / republish the site so every visitor sees the change.
  */
 export const siteConfig = {
-  businessName: "BIN RESTO",
+  businessName: "Stafford Brewers",
   tagline: "Exceptional Taste. Beautiful Moments.",
-  logoText: "BIN RESTO",
-  /** Optional path to an image logo in /public (e.g. "/logo.png"). Empty = typographic wordmark. */
   logoImage: "/__l5e/assets-v1/0d5c4f1b-7c8d-4924-9e0f-8fab6ed4bf69/stafford-logo.jpg",
   currency: "RWF",
 
-  /**
-   * Public menu URL encoded in the QR code. Set this to your final domain after
-   * publishing, e.g. "https://binresto.rw/menu". Empty = current site address + /menu.
-   */
+  /** Public menu URL used when sharing. Empty = current site address + /menu. */
   menuUrl: "",
 
-  /** WhatsApp number in international format, digits only, e.g. "2507XXXXXXXX". */
+  /** WhatsApp number that receives orders & bookings — international format, digits only, e.g. "2507XXXXXXXX". */
   whatsappNumber: "",
   phone: "", // e.g. "+250 7XX XXX XXX"
   email: "",
@@ -26,32 +21,14 @@ export const siteConfig = {
   facebookUrl: "",
   tiktokUrl: "",
   googleMapsUrl: "",
-  reservationUrl: "", // external booking service, optional
-  orderingUrl: "", // external ordering service, optional
+  reservationUrl: "", // optional external booking service
+  orderingUrl: "", // optional external ordering service
 
-  locations: {
-    kigali: {
-      label: "Kigali",
-      address: "", // e.g. "KG 000 St, Kigali"
-      mapUrl: "",
-      note: "Location details coming soon.",
-    },
-    southern: {
-      label: "Southern Province",
-      address: "",
-      mapUrl: "",
-      note: "Service details coming soon.",
-    },
-  },
+  location: "Musambira, Kamonyi",
+  openingHours: [{ days: "Open daily", hours: "05:00 – 23:00" }] as { days: string; hours: string }[],
+  services: ["Dine-in", "Grab & Go", "Table bookings", "WhatsApp orders"],
 
-  /** Describe exactly which areas you serve. Empty list shows a "to be confirmed" note. */
-  serviceAreas: [] as string[],
-  deliveryInfo: "", // e.g. "Delivery and collection available — ask on WhatsApp."
-
-  /** Opening hours. Empty list shows "Opening hours to be announced". */
-  openingHours: [] as { days: string; hours: string }[],
-
-  footerText: "Crafted with warmth — from Kigali to the Southern Province.",
+  copyright: "© 2026 Stafford Brewers. All rights reserved.",
 };
 
 export function isValidUrl(url?: string | null): url is string {

@@ -83,9 +83,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "BIN RESTO — Exceptional Taste. Beautiful Moments." },
-      { name: "description", content: "BIN RESTO — premium restaurant serving from Kigali to Rwanda's Southern Province." },
-      { property: "og:title", content: "BIN RESTO" },
+      { title: "Stafford Brewers — Exceptional Taste. Beautiful Moments." },
+      { name: "description", content: "Stafford Brewers — premium restaurant serving from Kigali to Rwanda's Southern Province." },
+      { property: "og:title", content: "Stafford Brewers" },
       { property: "og:description", content: "Exceptional taste and beautiful moments, from Kigali to the Southern Province." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

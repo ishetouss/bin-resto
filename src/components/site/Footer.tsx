@@ -51,7 +51,7 @@ export function Footer() {
 }
 
 export function FloatingWhatsApp() {
-  const wa = whatsappLink("Hello BIN RESTO!");
+  const wa = whatsappLink("Hello Stafford Brewers!");
   if (!wa) return null;
   return (
     <a href={wa} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="fixed bottom-5 right-5 z-30 grid size-14 place-items-center rounded-full bg-forest text-ivory shadow-frame transition-transform hover:scale-110">

@@ -25,9 +25,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BIN RESTO — Exceptional Taste. Beautiful Moments." },
-      { name: "description", content: "Samosas, doughnuts, burgers and chef's specials. BIN RESTO serves memorable food from Kigali to the Southern Province." },
-      { property: "og:title", content: "BIN RESTO — Exceptional Taste. Beautiful Moments." },
+      { title: "Stafford Brewers — Exceptional Taste. Beautiful Moments." },
+      { name: "description", content: "Samosas, doughnuts, burgers and chef's specials. Stafford Brewers serves memorable food from Kigali to the Southern Province." },
+      { property: "og:title", content: "Stafford Brewers — Exceptional Taste. Beautiful Moments." },
       { property: "og:description", content: "Explore our menu, book a table and share the moment — from Kigali to the Southern Province." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const wa = whatsappLink("Hello BIN RESTO, I'd like to order.");
+  const wa = whatsappLink("Hello Stafford Brewers, I'd like to order.");
   const parallax = useRef<HTMLImageElement>(null);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -75,7 +75,7 @@ function Home() {
 
       {/* CINEMATIC BAND */}
       <section className="relative h-[55vh] min-h-80 overflow-hidden">
-        <img ref={parallax} src={hero} alt="A BIN RESTO table with burger, fries and samosas" width={1600} height={1104} className="absolute inset-0 size-full scale-[1.08] object-cover" />
+        <img ref={parallax} src={hero} alt="A Stafford Brewers table with burger, fries and samosas" width={1600} height={1104} className="absolute inset-0 size-full scale-[1.08] object-cover" />
         <div className="absolute inset-0 bg-espresso/35" />
         <div className="relative mx-auto flex h-full max-w-7xl items-end px-5 pb-10 md:px-8">
           <p className="max-w-xl font-display text-3xl italic text-ivory md:text-5xl">“Good food is a welcome. Every plate, an invitation.”</p>
@@ -85,7 +85,7 @@ function Home() {
       {/* WELCOME */}
       <section className="mx-auto max-w-4xl px-5 py-24 text-center md:py-32">
         <Reveal>
-          <p className="eyebrow text-gold">Welcome to BIN RESTO</p>
+          <p className="eyebrow text-gold">Welcome to Stafford Brewers</p>
           <h2 className="mt-5 text-4xl leading-tight md:text-6xl">A place where every bite feels considered, and every guest feels at home.</h2>
           <div className="gold-rule mx-auto mt-10 w-40" />
         </Reveal>

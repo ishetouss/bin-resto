@@ -19,7 +19,7 @@ export function orderMessage(lines: CartLine[], currency: string, note?: string)
   const { total } = cartTotals(lines);
   const rows = lines.map((l) => `• ${l.qty} × ${l.name} — ${lineTotal(l).toLocaleString("en-US")} ${currency}`);
   return [
-    "Hello BIN RESTO, I'd like to place an order:",
+    "Hello Stafford Brewers, I'd like to place an order:",
     ...rows,
     `Total: ${total.toLocaleString("en-US")} ${currency}`,
     note ? `Note: ${note}` : "",

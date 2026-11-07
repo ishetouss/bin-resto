@@ -4,10 +4,10 @@ import { ContactSection, ServiceArea } from "@/components/site/ContactBlocks";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact & Locations — BIN RESTO" },
-      { name: "description", content: "Contact BIN RESTO and see where we serve, from Kigali to the Southern Province." },
-      { property: "og:title", content: "Contact BIN RESTO" },
-      { property: "og:description", content: "Hours, locations and ways to reach BIN RESTO." },
+      { title: "Contact & Locations — Stafford Brewers" },
+      { name: "description", content: "Contact Stafford Brewers and see where we serve, from Kigali to the Southern Province." },
+      { property: "og:title", content: "Contact Stafford Brewers" },
+      { property: "og:description", content: "Hours, locations and ways to reach Stafford Brewers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

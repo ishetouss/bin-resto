@@ -1,4 +1,4 @@
-# BIN RESTO — Website
+# Stafford Brewers — Website
 
 A fully static restaurant website (no backend, no database).
 

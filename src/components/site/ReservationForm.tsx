@@ -47,7 +47,7 @@ export function ReservationForm() {
     setStep("review");
   };
 
-  const msg = data && `Hello BIN RESTO, I'd like to request a table:\nName: ${data.name}\nPhone: ${data.phone}${data.email ? `\nEmail: ${data.email}` : ""}\nDate: ${data.date}\nTime: ${data.time}\nGuests: ${data.guests}${data.requests ? `\nRequests: ${data.requests}` : ""}\nPlease confirm if a table is available.`;
+  const msg = data && `Hello Stafford Brewers, I'd like to request a table:\nName: ${data.name}\nPhone: ${data.phone}${data.email ? `\nEmail: ${data.email}` : ""}\nDate: ${data.date}\nTime: ${data.time}\nGuests: ${data.guests}${data.requests ? `\nRequests: ${data.requests}` : ""}\nPlease confirm if a table is available.`;
   const wa = msg ? whatsappLink(msg) : null;
 
   const saveLocal = () => {
@@ -64,7 +64,7 @@ export function ReservationForm() {
       <div className="rounded border border-dashed p-8 text-center">
         <p className="eyebrow text-gold">Demo request saved</p>
         <h3 className="mt-2 text-3xl">Request noted on this device</h3>
-        <p className="mt-3 text-muted-foreground">This is a demonstration — your request was stored only in this browser and has <strong>not</strong> been sent to BIN RESTO. No table is reserved yet. Please contact the restaurant directly to confirm.</p>
+        <p className="mt-3 text-muted-foreground">This is a demonstration — your request was stored only in this browser and has <strong>not</strong> been sent to Stafford Brewers. No table is reserved yet. Please contact the restaurant directly to confirm.</p>
         <Button className="mt-6" variant="outline" onClick={() => { setForm(empty); setStep("form"); }}>New request</Button>
       </div>
     );
@@ -79,7 +79,7 @@ export function ReservationForm() {
           ))}
           {data.requests && <div className="col-span-2"><dt className="eyebrow text-muted-foreground">Special requests</dt><dd className="mt-1">{data.requests}</dd></div>}
         </dl>
-        <p className="text-sm text-muted-foreground">This sends a booking <em>request</em>. Your table is confirmed only when BIN RESTO replies.</p>
+        <p className="text-sm text-muted-foreground">This sends a booking <em>request</em>. Your table is confirmed only when Stafford Brewers replies.</p>
         <div className="flex flex-col gap-3 sm:flex-row">
           {wa ? (
             <Button asChild className="flex-1"><a href={wa} target="_blank" rel="noopener noreferrer">Send request on WhatsApp</a></Button>

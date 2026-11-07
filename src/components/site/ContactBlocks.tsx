@@ -4,7 +4,7 @@ import { siteConfig, whatsappLink, telLink, mailLink, isValidUrl } from "@/confi
 export function contactLinks() {
   const c = siteConfig;
   return [
-    { label: "WhatsApp", href: whatsappLink("Hello BIN RESTO!"), icon: MessageCircle },
+    { label: "WhatsApp", href: whatsappLink("Hello Stafford Brewers!"), icon: MessageCircle },
     { label: "Call us", href: telLink(), icon: Phone },
     { label: "Email", href: mailLink(), icon: Mail },
     { label: "Instagram", href: isValidUrl(c.instagramUrl) ? c.instagramUrl : null, icon: Instagram },
