@@ -186,8 +186,8 @@ function Home() {
       {/* STORY */}
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-24 md:grid-cols-2 md:px-8">
         <Reveal className="relative">
-          <img src={venue.url} alt="The restaurant terrace lit up at night" loading="lazy" width={689} height={532} className="aspect-[4/5] w-4/5 object-cover shadow-frame" />
-          <img src={coffee} alt="Cappuccino and espresso" loading="lazy" width={816} height={816} className="absolute -bottom-8 right-0 w-1/2 border-8 border-ivory object-cover shadow-frame" />
+          <img src={coffee} alt="Cappuccino and espresso" loading="lazy" width={816} height={816} className="aspect-[4/5] w-4/5 object-cover shadow-frame" />
+          <img src={mains} alt="Chicken curry and grilled tilapia" loading="lazy" width={816} height={816} className="absolute -bottom-8 right-0 w-1/2 border-8 border-ivory object-cover shadow-frame" />
         </Reveal>
         <Reveal delay={150}>
           <p className="eyebrow text-gold">Our story</p>
