@@ -1,6 +1,14 @@
 # Roadmap
-- [x] Build static BIN RESTO site (home, menu, reserve, share, contact)
-- [ ] Replace sample menu with official menu (prices as supplied)
-- [ ] Add owner's logo / look from uploaded screenshots
-- [ ] Professional menu animations
-- [ ] Contact links, socials, hours, locations — waiting on owner
+- [x] Build static site (home, menu, reserve, contact)
+- [x] Official menu loaded
+- [ ] Rename to Stafford Brewers everywhere, logo top-right + in footer
+- [ ] Remove top header; side drawer menu (opens/closes) on the left
+- [ ] Hero: terrace photo + "Exceptional Taste. Beautiful Moments." + Explore menu / Book a table
+- [ ] Remove QR/scan; keep Share + WhatsApp on home
+- [ ] Menu: no search, fewer photos (only matching ones)
+- [ ] Remove Kigali/Southern Province service text; location Musambira, Kamonyi; hours 05:00–23:00
+- [ ] Footer: dark dishes background, contact, socials, logo, © 2026 Stafford Brewers
+- [ ] Grab & Go offering
+- [ ] All sections always visible
+- [ ] WhatsApp number for orders/bookings — waiting on owner (number was cut off)
+- [ ] Social links — waiting on owner
