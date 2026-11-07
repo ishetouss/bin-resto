@@ -4,10 +4,10 @@ import { MenuExplorer } from "@/components/site/MenuExplorer";
 export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
-      { title: "Menu — BIN RESTO" },
-      { name: "description", content: "Coffee, tea, juices, smoothies, breakfast, curries, grills, wraps and bakery at BIN RESTO — prices in RWF." },
-      { property: "og:title", content: "The BIN RESTO Menu" },
-      { property: "og:description", content: "Browse, search and build your order from the BIN RESTO menu." },
+      { title: "Menu — Stafford Brewers" },
+      { name: "description", content: "Coffee, tea, juices, smoothies, breakfast, curries, grills, wraps and bakery at Stafford Brewers — prices in RWF." },
+      { property: "og:title", content: "The Stafford Brewers Menu" },
+      { property: "og:description", content: "Browse, search and build your order from the Stafford Brewers menu." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

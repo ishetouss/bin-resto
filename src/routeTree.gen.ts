@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as ReserveRouteImport } from './routes/reserve'
-import { Route as ShareRouteImport } from './routes/share'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,25 +34,18 @@ const ReserveRoute = ReserveRouteImport.update({
   path: '/reserve',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ShareRoute = ShareRouteImport.update({
-  id: '/share',
-  path: '/share',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/reserve': typeof ReserveRoute
-  '/share': typeof ShareRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/reserve': typeof ReserveRoute
-  '/share': typeof ShareRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +53,13 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/reserve': typeof ReserveRoute
-  '/share': typeof ShareRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/menu' | '/reserve' | '/share'
+  fullPaths: '/' | '/contact' | '/menu' | '/reserve'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/menu' | '/reserve' | '/share'
-  id: '__root__' | '/' | '/contact' | '/menu' | '/reserve' | '/share'
+  to: '/' | '/contact' | '/menu' | '/reserve'
+  id: '__root__' | '/' | '/contact' | '/menu' | '/reserve'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,7 +67,6 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   MenuRoute: typeof MenuRoute
   ReserveRoute: typeof ReserveRoute
-  ShareRoute: typeof ShareRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -109,13 +99,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReserveRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/share': {
-      id: '/share'
-      path: '/share'
-      fullPath: '/share'
-      preLoaderRoute: typeof ShareRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -124,7 +107,6 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   MenuRoute: MenuRoute,
   ReserveRoute: ReserveRoute,
-  ShareRoute: ShareRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

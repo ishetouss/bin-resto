@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -83,9 +84,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "BIN RESTO — Exceptional Taste. Beautiful Moments." },
-      { name: "description", content: "BIN RESTO — premium restaurant serving from Kigali to Rwanda's Southern Province." },
-      { property: "og:title", content: "BIN RESTO" },
+      { title: "Stafford Brewers — Exceptional Taste. Beautiful Moments." },
+      { name: "description", content: "Stafford Brewers — premium restaurant serving from Kigali to Rwanda's Southern Province." },
+      { property: "og:title", content: "Stafford Brewers" },
       { property: "og:description", content: "Exceptional taste and beautiful moments, from Kigali to the Southern Province." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -123,13 +124,14 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const isHome = useRouterState({ select: (s) => s.location.pathname === "/" });
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <CartProvider>
         <Header />
-        <main>
+        <main className={isHome ? "" : "pt-20 md:pt-24"}>
           <Outlet />
         </main>
         <Footer />

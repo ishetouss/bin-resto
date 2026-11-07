@@ -14,10 +14,12 @@ export function Reveal({ children, className, as: Tag = "div", delay = 0 }: { ch
           io.disconnect();
         }
       },
-      { threshold: 0.12 },
+      { threshold: 0, rootMargin: "0px 0px -40px 0px" },
     );
     io.observe(el);
-    return () => io.disconnect();
+    // Safety net: never leave a section hidden.
+    const t = window.setTimeout(() => el.classList.add("is-visible"), 2500);
+    return () => { io.disconnect(); window.clearTimeout(t); };
   }, []);
   return (
     <Tag ref={ref} className={cn("reveal", className)} style={{ transitionDelay: `${delay}ms` }}>

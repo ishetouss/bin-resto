@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Plus, Search, X } from "lucide-react";
+import { Plus, Coffee } from "lucide-react";
 import { categories, menuItems, availabilityLabel, tagLabel, type MenuItem, type Group } from "@/config/menuData";
 import { formatPrice } from "@/config/siteConfig";
 import { useCart } from "@/lib/cart";
@@ -28,7 +28,7 @@ function ItemDialog({ item, onClose }: { item: MenuItem | null; onClose: () => v
       <DialogContent className="max-w-lg overflow-hidden p-0">
         {item && (
           <>
-            <img src={item.image} alt={item.name} className="aspect-[4/3] w-full object-cover animate-in zoom-in-105 duration-700" />
+            {item.image && <img src={item.image} alt={item.name} className="aspect-[4/3] w-full object-cover animate-in zoom-in-105 duration-700" />}
             <div className="space-y-3 p-6">
               <p className="eyebrow text-gold">{categories.find((c) => c.id === item.category)?.name}</p>
               <DialogTitle className="font-display text-3xl font-medium">{item.name}</DialogTitle>
@@ -51,7 +51,7 @@ export function MenuHighlights({ limit = 6 }: { limit?: number }) {
   const [detail, setDetail] = useState<MenuItem | null>(null);
   const [group, setGroup] = useState<Group>("food");
   const addItem = useAdd();
-  const items = menuItems.filter((m) => m.featured && categories.find((c) => c.id === m.category)?.group === group).slice(0, limit);
+  const items = menuItems.filter((m) => m.featured && m.image && categories.find((c) => c.id === m.category)?.group === group).slice(0, limit);
   return (
     <div>
       <GroupSwitch value={group} onChange={(g) => setGroup(g as Group)} options={[["food", "Food"], ["drinks", "Drinks"]]} className="mx-auto" />
@@ -110,30 +110,22 @@ function GroupSwitch({ value, onChange, options, className }: { value: string; o
 export function MenuExplorer() {
   const [group, setGroup] = useState<"all" | Group>("all");
   const [cat, setCat] = useState("all");
-  const [q, setQ] = useState("");
   const [detail, setDetail] = useState<MenuItem | null>(null);
   const addItem = useAdd();
 
   const visibleCats = categories.filter((c) => group === "all" || c.group === group);
   const sections = useMemo(() => {
-    const s = q.trim().toLowerCase();
     return visibleCats
       .filter((c) => cat === "all" || c.id === cat)
-      .map((c) => ({ ...c, items: menuItems.filter((m) => m.category === c.id && (!s || `${m.name} ${m.description}`.toLowerCase().includes(s))) }))
+      .map((c) => ({ ...c, items: menuItems.filter((m) => m.category === c.id) }))
       .filter((c) => c.items.length);
-  }, [group, cat, q]);
+  }, [group, cat]);
 
   return (
     <div>
-      <div className="sticky top-16 z-20 -mx-5 space-y-4 border-b bg-background/95 px-5 py-4 backdrop-blur md:-mx-8 md:px-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="sticky top-0 z-20 -mx-5 space-y-4 border-b bg-background/95 px-5 py-4 backdrop-blur md:-mx-8 md:px-8">
+        <div className="flex items-center gap-4">
           <GroupSwitch value={group} onChange={(v) => { setGroup(v as typeof group); setCat("all"); }} options={[["all", "All"], ["drinks", "Drinks"], ["food", "Food"]]} />
-          <label className="relative md:w-80">
-            <span className="sr-only">Search the menu</span>
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search coffee, curry, cake…" className="w-full rounded-full border bg-card py-2.5 pl-10 pr-10 text-sm" />
-            {q && <button onClick={() => setQ("")} aria-label="Clear search" className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"><X className="size-4" /></button>}
-          </label>
         </div>
         <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 md:mx-0 md:px-0" role="tablist" aria-label="Menu categories">
           {[{ id: "all", name: "Everything" }, ...visibleCats].map((c) => (
@@ -147,21 +139,24 @@ export function MenuExplorer() {
 
       {sections.length === 0 ? (
         <div className="py-24 text-center animate-in fade-in">
-          <p className="font-display text-3xl text-muted-foreground">Nothing matches “{q}”.</p>
-          <Button variant="outline" className="mt-6" onClick={() => { setQ(""); setCat("all"); setGroup("all"); }}>Show the full menu</Button>
+          <p className="font-display text-3xl text-muted-foreground">Nothing here yet.</p>
+          <Button variant="outline" className="mt-6" onClick={() => { setCat("all"); setGroup("all"); }}>Show the full menu</Button>
         </div>
       ) : (
-        <div key={`${group}-${cat}-${q}`} className="mt-12 space-y-20">
+        <div key={`${group}-${cat}`} className="mt-12 space-y-20">
           {sections.map((s, si) => (
             <section key={s.id} aria-labelledby={`cat-${s.id}`} className="animate-in fade-in slide-in-from-bottom-8 fill-mode-both duration-700" style={{ animationDelay: `${Math.min(si, 4) * 90}ms` }}>
-              <header className="grid items-end gap-6 md:grid-cols-[220px_1fr]">
-                <div className="group relative aspect-[4/3] overflow-hidden md:aspect-square">
-                  <img src={s.image} alt="" loading="lazy" className="size-full object-cover transition-transform duration-[1500ms] group-hover:scale-110" />
-                  <span className="absolute inset-0 ring-1 ring-inset ring-gold/40" />
-                </div>
+              <header className={cn("grid items-end gap-6", s.image && "md:grid-cols-[220px_1fr]")}>
+                {s.image && (
+                  <div className="group relative aspect-[16/9] overflow-hidden md:aspect-square">
+                    <img src={s.image} alt="" loading="lazy" className="size-full object-cover transition-transform duration-[1500ms] group-hover:scale-110" />
+                    <span className="absolute inset-0 ring-1 ring-inset ring-gold/40" />
+                  </div>
+                )}
                 <div>
                   <p className="eyebrow text-gold">{s.group === "drinks" ? "Drinks" : "Kitchen"} · {s.items.length} {s.items.length === 1 ? "item" : "items"}</p>
                   <h2 id={`cat-${s.id}`} className="mt-2 text-5xl md:text-6xl">{s.name}</h2>
+                  {s.note && <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-forest px-3 py-1 text-xs text-ivory"><Coffee className="size-3.5" /> {s.note}</p>}
                   <div className="mt-5 h-px origin-left animate-[rule_1.2s_ease-out_both] bg-gold" style={{ animationDelay: `${Math.min(si, 4) * 90 + 200}ms` }} />
                 </div>
               </header>
