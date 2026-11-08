@@ -14,8 +14,8 @@ export const siteConfig = {
   menuUrl: "",
 
   /** WhatsApp number that receives orders & bookings — international format, digits only, e.g. "2507XXXXXXXX". */
-  whatsappNumber: "",
-  phone: "", // e.g. "+250 7XX XXX XXX"
+  whatsappNumber: "250780858565",
+  phone: "+250780858565",
   email: "",
   instagramUrl: "",
   facebookUrl: "",

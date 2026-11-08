@@ -84,7 +84,7 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em; }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; letter-spacing: 0; }
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 }
 
@@ -168,3 +168,12 @@
 }
 
 @keyframes rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.terrace-hero { min-height: 92svh; }
+.terrace-photo { object-position: 55% center; }
+.terrace-title { font-size: 46px; line-height: 1; overflow-wrap: anywhere; }
+@media (min-width: 768px) {
+  .terrace-hero { min-height: 88svh; }
+  .terrace-photo { object-position: center 48%; }
+  .terrace-title { font-size: 96px; }
+}
