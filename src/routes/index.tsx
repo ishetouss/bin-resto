@@ -1,10 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import hero from "@/assets/hero.jpg";
-import samosa from "@/assets/samosa.jpg";
 import burger from "@/assets/burger.jpg";
-import fries from "@/assets/fries.jpg";
-import drink from "@/assets/drink.jpg";
 import coffee from "@/assets/coffee.jpg";
 import mains from "@/assets/mains.jpg";
 import { Button } from "@/components/ui/button";
@@ -12,8 +9,7 @@ import { HangingFrames } from "@/components/site/HangingFrames";
 import { Reveal } from "@/components/site/Reveal";
 import venue from "@/assets/venue-night.jpg.asset.json";
 import { MenuHighlights, priceText } from "@/components/site/MenuExplorer";
-import { ShareBlock } from "@/components/site/ShareBlock";
-import { ContactSection } from "@/components/site/ContactBlocks";
+import { MenuQrSection } from "@/components/site/MenuQrSection";
 import { menuItems, tagLabel } from "@/config/menuData";
 import { siteConfig } from "@/config/siteConfig";
 import { Coffee } from "lucide-react";
@@ -196,33 +192,7 @@ function Home() {
         </Reveal>
       </section>
 
-      {/* RESERVATION CTA */}
-      <section className="relative overflow-hidden bg-burgundy py-24 text-primary-foreground">
-        <Reveal className="relative mx-auto max-w-3xl px-5 text-center">
-          <p className="eyebrow text-gold-soft">Reservations</p>
-          <h2 className="mt-4 text-5xl md:text-7xl">Your table awaits.</h2>
-          <p className="mx-auto mt-5 max-w-md text-ivory/80">Celebrations, dinners, or simply a good meal — send us a booking request.</p>
-          <Button asChild variant="gold" size="lg" className="mt-8"><Link to="/reserve">Book a table</Link></Button>
-        </Reveal>
-      </section>
-
-      {/* GALLERY */}
-      <section className="mx-auto max-w-7xl px-5 py-24 md:px-8">
-        <Reveal className="mb-10"><p className="eyebrow text-gold">Gallery</p><h2 className="mt-3 text-5xl">From our kitchen</h2></Reveal>
-        <div className="grid auto-rows-[160px] grid-cols-2 gap-3 md:auto-rows-[220px] md:grid-cols-4">
-          {[[coffee, "md:row-span-2", "Cappuccino"], [fries, "", "Fries"], [mains, "md:col-span-2", "Curry and grilled tilapia"], [samosa, "", "Samosas"], [burger, "row-span-2 md:row-span-1", "Burger"], [drink, "", "Drinks"]].map(([src, cls, alt], i) => (
-            <Reveal key={i} delay={i * 60} className={`group overflow-hidden ${cls}`}>
-              <img src={src} alt={alt} loading="lazy" className="size-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110" />
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* SHARE */}
-      <section className="bg-cream/50 py-20"><div className="px-5"><ShareBlock /></div></section>
-
-      {/* CONTACT */}
-      <section className="mx-auto max-w-7xl px-5 py-24 md:px-8"><ContactSection /></section>
+      <MenuQrSection />
     </>
   );
 }
