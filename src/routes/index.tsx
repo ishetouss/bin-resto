@@ -55,7 +55,7 @@ function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/55 to-espresso/20" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-32 md:px-8 md:pb-28">
           <p className="eyebrow animate-in fade-in slide-in-from-bottom-2 text-gold duration-700">{siteConfig.businessName} · {siteConfig.location}</p>
-          <h1 className="mt-5 text-[3.2rem] leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-1000 md:text-[6rem]">
+          <h1 className="terrace-title mt-5 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             Exceptional Taste.<br /><em className="text-gold-soft">Beautiful Moments.</em>
           </h1>
           <p className="mt-6 max-w-md text-lg text-ivory/85 animate-in fade-in duration-1000 [animation-delay:300ms] fill-mode-both">

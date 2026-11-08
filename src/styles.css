@@ -171,7 +171,9 @@
 
 .terrace-hero { min-height: 92svh; }
 .terrace-photo { object-position: 55% center; }
+.terrace-title { font-size: 46px; line-height: 1; overflow-wrap: anywhere; }
 @media (min-width: 768px) {
   .terrace-hero { min-height: 88svh; }
   .terrace-photo { object-position: center 48%; }
+  .terrace-title { font-size: 96px; }
 }

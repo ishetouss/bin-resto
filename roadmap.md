@@ -1,15 +1,15 @@
 # Roadmap
 - [x] Build static site (home, menu, reserve, contact)
 - [x] Official menu loaded
-- [ ] Rename to Stafford Brewers everywhere, logo top-right + in footer
-- [ ] Remove top header; side drawer menu (opens/closes) on the left
-- [ ] Hero: terrace photo + "Exceptional Taste. Beautiful Moments." + Explore menu / Book a table
-- [ ] Remove QR/scan; keep Share + WhatsApp on home
-- [ ] Menu: no search, fewer photos (only matching ones)
-- [ ] Remove Kigali/Southern Province service text; location Musambira, Kamonyi; hours 05:00–23:00
-- [ ] Footer: dark dishes background, contact, socials, logo, © 2026 Stafford Brewers
-- [ ] Grab & Go offering
-- [ ] All sections always visible
-- [ ] Connect +250780858565 for WhatsApp orders, bookings and phone contact
-- [ ] Polish photo presentation and check mobile/desktop photos
+- [x] Rename to Stafford Brewers everywhere, logo top-right + in footer
+- [x] Remove top header; side drawer menu (opens/closes) on the left
+- [x] Hero: terrace photo + "Exceptional Taste. Beautiful Moments." + Explore menu / Book a table
+- [x] Remove QR/scan; keep Share + WhatsApp on home
+- [x] Menu: no search, fewer photos (only matching ones)
+- [x] Remove Kigali/Southern Province service text; location Musambira, Kamonyi; hours 05:00–23:00
+- [x] Footer: dark dishes background, contact, logo, © 2026 Stafford Brewers
+- [x] Grab & Go offering
+- [x] All sections always visible
+- [x] Connect +250780858565 for WhatsApp orders, bookings and phone contact
+- [x] Polish photo presentation and check mobile/desktop photos
 - [ ] Social links — waiting on owner
