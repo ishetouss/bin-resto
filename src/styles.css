@@ -50,6 +50,8 @@
   --gold: oklch(0.74 0.11 80);
   --gold-soft: oklch(0.84 0.07 82);
   --forest: oklch(0.36 0.06 155);
+  --qr-paper: #fff;
+  --qr-ink: #000;
 
   --background: var(--ivory);
   --foreground: var(--espresso);
@@ -170,6 +172,7 @@
 @keyframes rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 .terrace-hero { min-height: 92svh; }
+.menu-qr { background: var(--qr-paper); }
 .terrace-photo { object-position: 55% center; }
 .terrace-title { font-size: 46px; line-height: 1; overflow-wrap: anywhere; }
 @media (min-width: 768px) {

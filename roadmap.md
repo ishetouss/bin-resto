@@ -4,7 +4,7 @@
 - [x] Rename to Stafford Brewers everywhere, logo top-right + in footer
 - [x] Remove top header; side drawer menu (opens/closes) on the left
 - [x] Hero: terrace photo + "Exceptional Taste. Beautiful Moments." + Explore menu / Book a table
-- [x] Remove QR/scan; keep Share + WhatsApp on home
+- [x] Replace homepage sharing, contact, gallery and reservation sections with a menu QR code
 - [x] Menu: no search, fewer photos (only matching ones)
 - [x] Remove Kigali/Southern Province service text; location Musambira, Kamonyi; hours 05:00–23:00
 - [x] Footer: dark dishes background, contact, logo, © 2026 Stafford Brewers

@@ -13,3 +13,4 @@
 - Site is strictly static: no backend, database or server functions. Why: owner requirement.
 - All business details/links live in src/config/siteConfig.ts and menu in src/config/menuData.ts; components read only from there. Why: owner edits one place.
 - Empty config values must hide their buttons; never invent contact details. Why: no fake info.
+- Generate menu QR codes with qrcode.react using the central public menu URL; never encode an editor preview address. Why: printed codes must work for visitors.

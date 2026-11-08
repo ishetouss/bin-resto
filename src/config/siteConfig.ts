@@ -11,7 +11,7 @@ export const siteConfig = {
   currency: "RWF",
 
   /** Public menu URL used when sharing. Empty = current site address + /menu. */
-  menuUrl: "",
+  menuUrl: "https://stafford-terrace-table.lovable.app/menu",
 
   /** WhatsApp number that receives orders & bookings — international format, digits only, e.g. "2507XXXXXXXX". */
   whatsappNumber: "250780858565",
