@@ -19,7 +19,7 @@ export function CartDrawer() {
       <aside role="dialog" aria-label="Your order" className={cn("absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-background shadow-frame transition-transform duration-500", open ? "translate-x-0" : "translate-x-full")}>
         <div className="flex items-center justify-between border-b px-6 py-5">
           <div>
-            <p className="eyebrow text-gold">Demo order</p>
+            <p className="eyebrow text-gold">Stafford Brewers</p>
             <h2 className="text-3xl">{review ? "Review your order" : "Your order"}</h2>
           </div>
           <button onClick={() => setOpen(false)} className="grid size-10 place-items-center rounded-full hover:bg-muted" aria-label="Close order"><X className="size-5" /></button>
@@ -66,7 +66,7 @@ export function CartDrawer() {
           <div className="space-y-3 border-t px-6 py-5">
             <div className="flex justify-between text-sm text-muted-foreground"><span>Subtotal</span><span className="tabular-nums">{formatPrice(totals.subtotal)}</span></div>
             <div className="flex justify-between font-display text-2xl"><span>Total</span><span className="tabular-nums">{formatPrice(totals.total)}</span></div>
-            <p className="text-xs text-muted-foreground">Sample prices. Final price and availability are confirmed by Stafford Brewers.</p>
+            <p className="text-xs text-muted-foreground">Send your order on WhatsApp. Availability is confirmed by Stafford Brewers.</p>
             {!review ? (
               <div className="flex gap-2">
                 <Button variant="ghost" onClick={clear}>Clear</Button>

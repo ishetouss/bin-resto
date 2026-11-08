@@ -10,5 +10,6 @@
 - [ ] Footer: dark dishes background, contact, socials, logo, © 2026 Stafford Brewers
 - [ ] Grab & Go offering
 - [ ] All sections always visible
-- [ ] WhatsApp number for orders/bookings — waiting on owner (number was cut off)
+- [ ] Connect +250780858565 for WhatsApp orders, bookings and phone contact
+- [ ] Polish photo presentation and check mobile/desktop photos
 - [ ] Social links — waiting on owner

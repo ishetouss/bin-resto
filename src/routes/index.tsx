@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import hero from "@/assets/hero.jpg";
 import samosa from "@/assets/samosa.jpg";
 import burger from "@/assets/burger.jpg";
-import sandwich from "@/assets/sandwich.jpg";
 import fries from "@/assets/fries.jpg";
 import drink from "@/assets/drink.jpg";
 import coffee from "@/assets/coffee.jpg";
@@ -44,15 +43,15 @@ function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const specials = menuItems.filter((m) => m.tags?.includes("chef")).slice(0, 3);
-  const best = menuItems.filter((m) => m.featured && !m.tags?.length).slice(0, 5);
+  const specials = menuItems.filter((m) => m.tags?.includes("chef") && m.image).slice(0, 3);
+  const best = menuItems.filter((m) => m.featured && !m.tags?.length && m.image).slice(0, 5);
   const { add } = useCart();
 
   return (
     <>
       {/* HERO */}
-      <section className="section-dark relative flex min-h-[100svh] items-end overflow-hidden">
-        <img src={venue.url} alt="The Stafford Brewers terrace lit up at night" width={689} height={532} className="absolute inset-0 size-full scale-105 object-cover animate-in fade-in zoom-in-110 duration-[2000ms]" />
+      <section className="terrace-hero section-dark relative flex items-end overflow-hidden">
+        <img src={venue.url} alt="The Stafford Brewers terrace lit up at night" width={689} height={532} fetchPriority="high" className="terrace-photo absolute inset-0 size-full object-cover animate-in fade-in duration-1000" />
         <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/55 to-espresso/20" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-32 md:px-8 md:pb-28">
           <p className="eyebrow animate-in fade-in slide-in-from-bottom-2 text-gold duration-700">{siteConfig.businessName} · {siteConfig.location}</p>
