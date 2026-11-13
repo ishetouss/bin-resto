@@ -14,6 +14,12 @@ import sandwich from "@/assets/sandwich.jpg";
 import burger from "@/assets/burger.jpg";
 import fries from "@/assets/fries.jpg";
 import samosa from "@/assets/samosa.jpg";
+import chickenWrap from "@/assets/chicken-wrap.jpg";
+import africanCoffee from "@/assets/african-coffee.png.asset.json";
+import passionJuice from "@/assets/passion-juice.png.asset.json";
+import chickenCurry from "@/assets/chicken-curry.png.asset.json";
+import tilapiaPlate from "@/assets/tilapia-plate.png.asset.json";
+import beefSteak from "@/assets/beef-steak.png.asset.json";
 
 export type Availability = "available" | "ask" | "unavailable";
 export type Tag = "bestseller" | "offer" | "chef";
@@ -51,8 +57,8 @@ const sections: Section[] = [
     ["Cinnamon Latte", 5500], ["Chai Latte", 5500], ["Ginger Latte", 5500],
   ]},
   { id: "special-coffee", name: "Special Coffee", group: "drinks", image: coffee, items: [
-    ["African Coffee", 3500, undefined, pick], ["Irish Coffee", 3500], ["Irish Coffee", 6000],
-    ["Irish Spice Coffee", 8000, undefined, chef], ["For Long Journey Coffee", 6000, undefined, chef],
+    ["African Coffee", 3500, undefined, { featured: true, image: africanCoffee.url }], ["Irish Coffee", 3500], ["Irish Coffee", 6000],
+    ["Irish Spice Coffee", 8000], ["For Long Journey Coffee", 6000],
   ]},
   { id: "iced-coffee", name: "Iced Coffee", group: "drinks", image: drink, note: "Grab & Go available", items: [
     ["Iced Americano", 3500], ["Iced Latte / Cappuccino", 4000], ["Iced Mocha", 5000], ["Iced Chocolate", 4500],
@@ -90,7 +96,7 @@ const sections: Section[] = [
   ]},
   { id: "juices", name: "Fresh Juices", group: "drinks", image: drink, items: [
     ["Mango Juice", 10000], ["Mango & Beetroot Juice", 10000], ["Pineapple Juice", 6000], ["Lemonade", 6000],
-    ["Papaya Juice", 6000], ["Apple Juice", 7000], ["Tree Tomato Juice", 6000], ["Passion Juice", 6000, undefined, pick],
+    ["Papaya Juice", 6000], ["Apple Juice", 7000], ["Tree Tomato Juice", 6000], ["Passion Juice", 6000, undefined, { featured: true, image: passionJuice.url }],
     ["Carrot Juice", 7000], ["Orange Juice", 7000], ["Avocado Juice", 6000], ["Cocktail Juice", 6000],
     ["Beetroot & Pineapple Juice", 6000], ["Create Your Own Juice", 7000],
   ]},
@@ -111,6 +117,13 @@ const sections: Section[] = [
     ["Spanish Omelet", 5000, "Beaten eggs with diced onions, tomatoes and green peppers."],
     ["Special Omelet", 7000, "Beaten eggs, chicken strips with chips, diced onions, tomatoes and green peppers."],
     ["Fruit Cut Salad", 7000],
+    ["Musambira Breakfast", null], ["Egg Spaghetti", null], ["Fried Egg & Avocado on Toasted Bread", null],
+    ["Breakfast Sandwich", null], ["St4d Signature Omelette", null],
+  ]},
+  { id: "lunch-brunch", name: "Lunch / Brunch", group: "food", image: "", items: [
+    ["Meatballs Stew", null], ["Musambira Beef Pasta", null], ["St4d Platter", null],
+    ["Spaghetti Arrabbiata – Indian Style", null], ["Spaghetti Veg Wrap", null],
+    ["Chicken & Mushroom Wrap", null], ["Chicken Rice", null],
   ]},
   { id: "soup", name: "Soup", group: "food", image: "", items: [
     ["Mushroom Soup", 6000, "Fresh mushroom, onions, garlic, ginger and fresh cream, served with garlic bread."],
@@ -142,13 +155,13 @@ const sections: Section[] = [
   ]},
   { id: "indian", name: "Indian Dishes", group: "food", image: mains, items: [
     ["Fish Curry", 12000, "Tender boneless fish in curry sauce, served with rice and chips."],
-    ["Chicken Curry", 12000, "Tender boneless chicken in curry sauce, served with rice and chips.", pick],
+    ["Chicken Curry", 12000, "Tender boneless chicken in curry sauce, served with rice and chips.", { featured: true, image: chickenCurry.url }],
     ["Veggies Curry", 6000, "Mixed vegetables in curry sauce, served with rice and chips."],
   ]},
   { id: "mains", name: "Lunch & Dinner", group: "food", image: mains, items: [
-    ["Grilled Tilapia Fillet", 12000, "Marinated tilapia fillet with chips, rice or boiled potatoes and vegetables.", pick],
+    ["Grilled Tilapia Fillet", 12000, "Marinated tilapia fillet with chips, rice or boiled potatoes and vegetables.", { featured: true, image: tilapiaPlate.url }],
     ["Roasted Chicken Leg", 10000, "Marinated chicken leg with chips & vegetables."],
-    ["Grilled Beef Steak", 15000, "Boneless beef fillet with chips & vegetables.", chef],
+    ["Grilled Beef Steak", 15000, "Boneless beef fillet with chips & vegetables.", { ...chef, image: beefSteak.url }],
     ["Chicken / Fish Stroganoff", 12000, "Tender meat in creamy mushroom sauce & vegetables, with rice & chips or boiled potatoes."],
     ["Chicken / Veg Stew (Gatogo)", 12000, "Chicken cooked with vegetables, garden peas and potatoes or green bananas."],
     ["Beef / Chicken Brochette (2 pc)", 12000, "Grilled brochettes with mushroom, tomato or pepper sauce, served with chips."],
@@ -158,13 +171,15 @@ const sections: Section[] = [
     ["Fish Finger", 10000],
   ]},
   { id: "wraps", name: "Wraps", group: "food", image: "", items: [
-    ["Chicken / Fish / Beef Wrap", 9000], ["Chicken Wrap Plain", 7000], ["Fish Wrap Plain", 9000],
+    ["Chicken / Fish / Beef Wrap", 9000], ["Chicken Wrap Plain", 7000, undefined, { image: chickenWrap }], ["Fish Wrap Plain", 9000],
     ["Fish Wrap Plain with Chips", 10000], ["Beef Wrap Plain", 9000],
     ["Stir-Fried Chicken / Beef Wrap", 10000, "Stir-fried vegetables with strips of meat, served with chips."],
     ["Sautéed Vegetable Wrap", 6000, "Sautéed carrots, onions, zucchini, avocado & coriander in a fresh chapati."],
   ]},
   { id: "sides", name: "Side Orders", group: "food", image: fries, items: [
     ["Side Salad", 2500], ["Steamed Rice", 2500], ["French Fries / Green Banana", 3000], ["Vegetables", 3000], ["Avocado Salad", 2000],
+    ["Sautéed Potatoes", null], ["Fried Vegetable Rice", null], ["Vegetable Ratatouille", null], ["Rice Biryani", null],
+    ["Pilau Rice", null], ["Mashed Potatoes or Bananas", null], ["Pomme Croquette", null], ["Boiled Eggs", null],
   ]},
   { id: "snacks", name: "Snacks & Bakery", group: "food", image: samosa, items: [
     ["Chapatti", 1000], ["Beef / Veggie Samosa", 1000, undefined, pick], ["Cinnamon Rolls", 1000],
@@ -173,6 +188,9 @@ const sections: Section[] = [
     ["Half Carrot Cake", 6000], ["Full Carrot Cake", 9000],
     ["Half Lemon Cake", 6000], ["Full Lemon Cake", 9000],
     ["STA4 Sweet Bread Sandwich", 2500],
+  ]},
+  { id: "dessert", name: "Dessert", group: "food", image: "", items: [
+    ["Cake of Your Choice", null], ["Fresh Cut Fruits", null], ["Scoop of Three Types of Ice Cream", null],
   ]},
 ];
 

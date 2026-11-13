@@ -180,3 +180,26 @@
   .terrace-photo { object-position: center 48%; }
   .terrace-title { font-size: 96px; }
 }
+
+.menu-dark {
+  --background: var(--espresso);
+  --foreground: var(--ivory);
+  --card: var(--espresso-soft);
+  --card-foreground: var(--ivory);
+  --muted: var(--espresso-soft);
+  --muted-foreground: oklch(0.78 0.03 80);
+  --border: oklch(0.36 0.03 50);
+  --input: oklch(0.36 0.03 50);
+  --burgundy: oklch(0.55 0.13 20);
+}
+.menu-dark [role="tablist"] > span[aria-hidden] { background: var(--gold); }
+.menu-dark [role="tab"][aria-selected="true"].eyebrow { color: var(--espresso); }
+
+@keyframes steam { 0% { opacity: 0; transform: translateY(8px) scaleX(1); } 40% { opacity: .7; } 100% { opacity: 0; transform: translateY(-36px) scaleX(1.6); } }
+@utility steam {
+  position: absolute; bottom: 55%; width: 10px; height: 40px; border-radius: 9999px;
+  background: linear-gradient(to top, color-mix(in oklab, var(--ivory) 80%, transparent), transparent);
+  filter: blur(4px); animation: steam 3.2s ease-out infinite; pointer-events: none;
+}
+@keyframes float-soft { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@utility float-soft { animation: float-soft 6s ease-in-out infinite; }
