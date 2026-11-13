@@ -48,7 +48,7 @@ export function HangingFrames() {
               className={`hang ${f.w} bg-card p-2 pb-6 shadow-frame ring-1 ring-gold/40`}
               style={{ ["--string" as string]: `${f.string + 24}px`, ["--tilt" as string]: `${f.tilt}deg`, ["--dur" as string]: `${f.dur}s`, ["--delay" as string]: `${-i * 1.3}s` }}
             >
-              <img src={f.src} alt={f.alt} width={400} height={400} className="aspect-square w-full object-cover" loading={i < 3 ? "eager" : "lazy"} />
+              <div className="relative overflow-hidden">{f.alt === "Cappuccino" && [0, 1, 2].map((k) => <span key={k} className="steam" style={{ left: `${38 + k * 10}%`, animationDelay: `${k * 0.9}s` }} />)}<img src={f.src} alt={f.alt} width={400} height={400} className="aspect-square w-full object-cover" loading={i < 3 ? "eager" : "lazy"} /></div>
             </figure>
           </div>
         </div>

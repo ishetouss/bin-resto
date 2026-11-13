@@ -1,16 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
-import hero from "@/assets/hero.jpg";
-import burger from "@/assets/burger.jpg";
 import coffee from "@/assets/coffee.jpg";
 import mains from "@/assets/mains.jpg";
+import africanCup from "@/assets/african-coffee-cup.jpg";
+import chickenWrap from "@/assets/chicken-wrap.jpg";
+import africanCoffee from "@/assets/african-coffee.png.asset.json";
+import passionJuice from "@/assets/passion-juice.png.asset.json";
+import beefSteak from "@/assets/beef-steak.png.asset.json";
+import interior from "@/assets/interior.png.asset.json";
+import breakfast from "@/assets/breakfast.jpg";
+import sandwich from "@/assets/sandwich.jpg";
+import samosa from "@/assets/samosa.jpg";
 import { Button } from "@/components/ui/button";
 import { HangingFrames } from "@/components/site/HangingFrames";
 import { Reveal } from "@/components/site/Reveal";
 import venue from "@/assets/venue-night.jpg.asset.json";
 import { MenuHighlights, priceText } from "@/components/site/MenuExplorer";
 import { MenuQrSection } from "@/components/site/MenuQrSection";
-import { menuItems, tagLabel } from "@/config/menuData";
+import { menuItems, type MenuItem } from "@/config/menuData";
 import { siteConfig } from "@/config/siteConfig";
 import { Coffee } from "lucide-react";
 import { useCart } from "@/lib/cart";
@@ -31,16 +37,24 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const parallax = useRef<HTMLImageElement>(null);
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const onScroll = () => { if (parallax.current) parallax.current.style.transform = `translateY(${window.scrollY * 0.15}px) scale(1.08)`; };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
-  const specials = menuItems.filter((m) => m.tags?.includes("chef") && m.image).slice(0, 3);
-  const best = menuItems.filter((m) => m.featured && !m.tags?.length && m.image).slice(0, 5);
+  const pickItem = (name: string, image: string, label?: string) => {
+    const m = menuItems.find((x) => x.name === name) as MenuItem;
+    return { ...m, image, label };
+  };
+  const specials = [
+    pickItem("Cappuccino", coffee, "Barista's pick"),
+    pickItem("African Coffee", africanCup, "Grab & Go"),
+    pickItem("Grilled Beef Steak", beefSteak.url, "House special"),
+  ];
+  const best = [
+    pickItem("African Coffee", africanCoffee.url),
+    pickItem("Passion Juice", passionJuice.url),
+    pickItem("Rolex", breakfast),
+    pickItem("Chicken Club Sandwich", sandwich),
+    pickItem("Beef / Veggie Samosa", samosa),
+    pickItem("Chicken Wrap Plain", chickenWrap),
+  ];
   const { add } = useCart();
 
   return (
@@ -78,77 +92,46 @@ function Home() {
         <Reveal>
           <p className="eyebrow text-gold">Grab &amp; Go</p>
           <h2 className="mt-3 text-5xl leading-tight">Your coffee, ready when you are.</h2>
-          <p className="mt-4 max-w-md text-muted-foreground">On your way to work or a long journey? Every coffee on our menu is available as Grab &amp; Go — brewed fresh, handed over with a smile.</p>
+          <p className="mt-4 max-w-md text-muted-foreground">On your way to work? Grab a creamy cappuccino — every coffee on our menu is available as Grab &amp; Go — brewed fresh, handed over with a smile.</p>
           <Button asChild className="mt-8"><Link to="/menu">See the coffee menu</Link></Button>
         </Reveal>
         <HangingFrames />
       </section>
 
-      {/* CINEMATIC BAND */}
-      <section className="relative h-[55vh] min-h-80 overflow-hidden">
-        <img ref={parallax} src={hero} alt="A Stafford Brewers table with burger, fries and samosas" width={1600} height={1104} className="absolute inset-0 size-full scale-[1.08] object-cover" />
-        <div className="absolute inset-0 bg-espresso/35" />
-        <div className="relative mx-auto flex h-full max-w-7xl items-end px-5 pb-10 md:px-8">
-          <p className="max-w-xl font-display text-3xl italic text-ivory md:text-5xl">“Good food is a welcome. Every plate, an invitation.”</p>
-        </div>
-      </section>
-
-      {/* WELCOME */}
-      <section className="mx-auto max-w-4xl px-5 py-24 text-center md:py-32">
-        <Reveal>
-          <p className="eyebrow text-gold">Welcome to Stafford Brewers</p>
-          <h2 className="mt-5 text-4xl leading-tight md:text-6xl">A place where every bite feels considered, and every guest feels at home.</h2>
-          <div className="gold-rule mx-auto mt-10 w-40" />
-        </Reveal>
-      </section>
-
-      {/* SIGNATURE SHOWCASE — asymmetric */}
-      <section className="mx-auto grid max-w-7xl gap-6 px-5 pb-24 md:grid-cols-12 md:px-8">
-        <Reveal className="md:col-span-7">
-          <figure className="group overflow-hidden"><img src={burger} alt="Signature cheese burger" loading="lazy" width={816} height={816} className="aspect-[4/3] w-full object-cover transition-transform duration-1000 group-hover:scale-105" /></figure>
-          <p className="eyebrow mt-4 text-gold">Signature</p>
-          <h3 className="text-3xl">The Classic, perfected.</h3>
-        </Reveal>
-        <div className="grid gap-6 md:col-span-5 md:pt-24">
-          <Reveal delay={150}>
-            <figure className="group overflow-hidden"><img src={coffee} alt="Cappuccino with latte art" loading="lazy" width={816} height={816} className="aspect-square w-full object-cover transition-transform duration-1000 group-hover:scale-105" /></figure>
-            <h3 className="mt-3 text-2xl">Brewed with care</h3>
-          </Reveal>
-          <Reveal delay={300}>
-            <p className="text-muted-foreground">From espresso to Kawaccino, Rwandan teas to fresh-pressed juices — and a kitchen that celebrates simple ingredients done beautifully.</p>
-          </Reveal>
-        </div>
-      </section>
-
       {/* SPECIAL MENU TODAY */}
-      <section className="section-dark py-24">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <Reveal className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <section className="section-dark relative overflow-hidden py-24 md:py-32">
+        <div aria-hidden className="pointer-events-none absolute -right-32 -top-32 size-[28rem] rounded-full bg-gold/10 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl px-5 md:px-8">
+          <Reveal className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
             <div>
-              <p className="eyebrow text-gold">Today's discovery</p>
-              <h2 className="mt-3 text-5xl md:text-6xl">Find Our Special Menu Today</h2>
+              <p className="eyebrow flex items-center gap-3 text-gold"><span className="h-px w-10 bg-gold" /> Today's discovery</p>
+              <h2 className="mt-4 text-5xl leading-[0.95] md:text-7xl">Find our special<br /><em className="text-gold-soft">menu today.</em></h2>
             </div>
-            <Button asChild variant="gold"><Link to="/menu">See the full menu</Link></Button>
+            <Button asChild variant="gold" size="lg"><Link to="/menu">See the full menu</Link></Button>
           </Reveal>
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
             {specials.map((m, i) => (
-              <Reveal key={m.id} delay={i * 120} className={i === 1 ? "md:translate-y-10" : ""}>
-                <article className="group">
-                  <div className="relative overflow-hidden ring-1 ring-gold/30">
-                    <img src={m.image} alt={m.name} loading="lazy" width={600} height={750} className="aspect-[4/5] w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-                    <span className="eyebrow absolute left-4 top-4 bg-gold px-3 py-1 text-[0.6rem] text-espresso">{m.tags?.[0] ? tagLabel[m.tags[0]] : "Special"}</span>
+              <Reveal key={m.id} delay={i * 140}>
+                <article className="group relative overflow-hidden rounded-2xl ring-1 ring-ivory/10 transition-all duration-700 hover:-translate-y-2 hover:ring-gold/60">
+                  <div className="relative">
+                    {i === 0 && [0, 1, 2].map((k) => <span key={k} className="steam z-10" style={{ left: `${42 + k * 7}%`, bottom: "45%", animationDelay: `${k * 0.8}s` }} />)}
+                    <img src={m.image} alt={m.name} loading="lazy" width={600} height={750} className="aspect-[4/5] w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110" />
                   </div>
-                  <div className="mt-4 flex items-baseline justify-between gap-4">
-                    <h3 className="text-2xl">{m.name}</h3>
-                    <span className="text-gold">{priceText(m)}</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/30 to-transparent" />
+                  <span className="eyebrow absolute left-5 top-5 rounded-full border border-gold/50 bg-espresso/50 px-3 py-1 text-[0.6rem] text-gold backdrop-blur">{m.label}</span>
+                  <div className="absolute inset-x-0 bottom-0 p-6">
+                    <div className="flex items-end justify-between gap-4">
+                      <h3 className="text-3xl leading-tight">{m.name}</h3>
+                      <span className="shrink-0 font-medium text-gold tabular-nums">{priceText(m)}</span>
+                    </div>
+                    <button onClick={() => { if (m.price !== null) { add({ id: m.id, name: m.name, price: m.price }); toast.success(`${m.name} added`); } }}
+                      className="eyebrow mt-5 inline-flex items-center gap-2 rounded-full bg-ivory/10 px-4 py-2 text-ivory backdrop-blur transition-colors hover:bg-gold hover:text-espresso">Add to order +</button>
                   </div>
-                  {m.description && <p className="mt-1 text-sm text-ivory/70">{m.description}</p>}
-                  <button onClick={() => { if (m.price !== null) { add({ id: m.id, name: m.name, price: m.price }); toast.success(`${m.name} added`); } }} className="eyebrow mt-4 text-gold hover:underline">Add to order +</button>
                 </article>
               </Reveal>
             ))}
           </div>
-          <p className="mt-20 text-center text-xs text-ivory/50">Availability may vary — please ask our team.</p>
+          <p className="mt-14 text-center text-xs text-ivory/50">Availability may vary — please ask our team.</p>
         </div>
       </section>
 
@@ -183,6 +166,7 @@ function Home() {
         <Reveal className="relative">
           <img src={coffee} alt="Cappuccino and espresso" loading="lazy" width={816} height={816} className="aspect-[4/5] w-4/5 object-cover shadow-frame" />
           <img src={mains} alt="Chicken curry and grilled tilapia" loading="lazy" width={816} height={816} className="absolute -bottom-8 right-0 w-1/2 border-8 border-ivory object-cover shadow-frame" />
+          <img src={interior.url} alt="Inside Stafford Brewers — brick arches and long dining tables" loading="lazy" width={1316} height={1195} className="mt-16 aspect-[16/10] w-full object-cover shadow-frame" />
         </Reveal>
         <Reveal delay={150}>
           <p className="eyebrow text-gold">Our story</p>

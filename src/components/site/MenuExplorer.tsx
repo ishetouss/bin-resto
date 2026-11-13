@@ -28,7 +28,7 @@ function ItemDialog({ item, onClose }: { item: MenuItem | null; onClose: () => v
       <DialogContent className="max-w-lg overflow-hidden p-0">
         {item && (
           <>
-            {item.image && <img src={item.image} alt={item.name} className="aspect-[4/3] w-full object-cover animate-in zoom-in-105 duration-700" />}
+            
             <div className="space-y-3 p-6">
               <p className="eyebrow text-gold">{categories.find((c) => c.id === item.category)?.name}</p>
               <DialogTitle className="font-display text-3xl font-medium">{item.name}</DialogTitle>
@@ -146,13 +146,7 @@ export function MenuExplorer() {
         <div key={`${group}-${cat}`} className="mt-12 space-y-20">
           {sections.map((s, si) => (
             <section key={s.id} aria-labelledby={`cat-${s.id}`} className="animate-in fade-in slide-in-from-bottom-8 fill-mode-both duration-700" style={{ animationDelay: `${Math.min(si, 4) * 90}ms` }}>
-              <header className={cn("grid items-end gap-6", s.image && "md:grid-cols-[220px_1fr]")}>
-                {s.image && (
-                  <div className="group relative aspect-[16/9] overflow-hidden md:aspect-square">
-                    <img src={s.image} alt="" loading="lazy" className="size-full object-cover transition-transform duration-[1500ms] group-hover:scale-110" />
-                    <span className="absolute inset-0 ring-1 ring-inset ring-gold/40" />
-                  </div>
-                )}
+              <header>
                 <div>
                   <p className="eyebrow text-gold">{s.group === "drinks" ? "Drinks" : "Kitchen"} · {s.items.length} {s.items.length === 1 ? "item" : "items"}</p>
                   <h2 id={`cat-${s.id}`} className="mt-2 text-5xl md:text-6xl">{s.name}</h2>
