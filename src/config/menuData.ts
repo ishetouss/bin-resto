@@ -15,11 +15,11 @@ import burger from "@/assets/burger.jpg";
 import fries from "@/assets/fries.jpg";
 import samosa from "@/assets/samosa.jpg";
 import chickenWrap from "@/assets/chicken-wrap.jpg";
-import africanCoffee from "@/assets/african-coffee.png.asset.json";
-import passionJuice from "@/assets/passion-juice.png.asset.json";
-import chickenCurry from "@/assets/chicken-curry.png.asset.json";
-import tilapiaPlate from "@/assets/tilapia-plate.png.asset.json";
-import beefSteak from "@/assets/beef-steak.png.asset.json";
+import africanCoffee from "@/assets/african-coffee.jpg";
+import passionJuice from "@/assets/passion-juice.png";
+import chickenCurry from "@/assets/chicken-curry.png";
+import tilapiaPlate from "@/assets/tilapia-plate.png";
+import beefSteak from "@/assets/beef-steak.jpg";
 
 export type Availability = "available" | "ask" | "unavailable";
 export type Tag = "bestseller" | "offer" | "chef";
@@ -57,7 +57,7 @@ const sections: Section[] = [
     ["Cinnamon Latte", 5500], ["Chai Latte", 5500], ["Ginger Latte", 5500],
   ]},
   { id: "special-coffee", name: "Special Coffee", group: "drinks", image: coffee, items: [
-    ["African Coffee", 3500, undefined, { featured: true, image: africanCoffee.url }], ["Irish Coffee", 3500], ["Irish Coffee", 6000],
+    ["African Coffee", 3500, undefined, { featured: true, image: africanCoffee }], ["Irish Coffee", 3500], ["Irish Coffee", 6000],
     ["Irish Spice Coffee", 8000], ["For Long Journey Coffee", 6000],
   ]},
   { id: "iced-coffee", name: "Iced Coffee", group: "drinks", image: drink, note: "Grab & Go available", items: [
@@ -96,7 +96,7 @@ const sections: Section[] = [
   ]},
   { id: "juices", name: "Fresh Juices", group: "drinks", image: drink, items: [
     ["Mango Juice", 10000], ["Mango & Beetroot Juice", 10000], ["Pineapple Juice", 6000], ["Lemonade", 6000],
-    ["Papaya Juice", 6000], ["Apple Juice", 7000], ["Tree Tomato Juice", 6000], ["Passion Juice", 6000, undefined, { featured: true, image: passionJuice.url }],
+    ["Papaya Juice", 6000], ["Apple Juice", 7000], ["Tree Tomato Juice", 6000], ["Passion Juice", 6000, undefined, { featured: true, image: passionJuice }],
     ["Carrot Juice", 7000], ["Orange Juice", 7000], ["Avocado Juice", 6000], ["Cocktail Juice", 6000],
     ["Beetroot & Pineapple Juice", 6000], ["Create Your Own Juice", 7000],
   ]},
@@ -155,13 +155,13 @@ const sections: Section[] = [
   ]},
   { id: "indian", name: "Indian Dishes", group: "food", image: mains, items: [
     ["Fish Curry", 12000, "Tender boneless fish in curry sauce, served with rice and chips."],
-    ["Chicken Curry", 12000, "Tender boneless chicken in curry sauce, served with rice and chips.", { featured: true, image: chickenCurry.url }],
+    ["Chicken Curry", 12000, "Tender boneless chicken in curry sauce, served with rice and chips.", { featured: true, image: chickenCurry }],
     ["Veggies Curry", 6000, "Mixed vegetables in curry sauce, served with rice and chips."],
   ]},
   { id: "mains", name: "Lunch & Dinner", group: "food", image: mains, items: [
-    ["Grilled Tilapia Fillet", 12000, "Marinated tilapia fillet with chips, rice or boiled potatoes and vegetables.", { featured: true, image: tilapiaPlate.url }],
+    ["Grilled Tilapia Fillet", 12000, "Marinated tilapia fillet with chips, rice or boiled potatoes and vegetables.", { featured: true, image: tilapiaPlate }],
     ["Roasted Chicken Leg", 10000, "Marinated chicken leg with chips & vegetables."],
-    ["Grilled Beef Steak", 15000, "Boneless beef fillet with chips & vegetables.", { ...chef, image: beefSteak.url }],
+    ["Grilled Beef Steak", 15000, "Boneless beef fillet with chips & vegetables.", { ...chef, image: beefSteak }],
     ["Chicken / Fish Stroganoff", 12000, "Tender meat in creamy mushroom sauce & vegetables, with rice & chips or boiled potatoes."],
     ["Chicken / Veg Stew (Gatogo)", 12000, "Chicken cooked with vegetables, garden peas and potatoes or green bananas."],
     ["Beef / Chicken Brochette (2 pc)", 12000, "Grilled brochettes with mushroom, tomato or pepper sauce, served with chips."],

@@ -3,17 +3,17 @@ import coffee from "@/assets/coffee.jpg";
 import mains from "@/assets/mains.jpg";
 import africanCup from "@/assets/african-coffee-cup.jpg";
 import chickenWrap from "@/assets/chicken-wrap.jpg";
-import africanCoffee from "@/assets/african-coffee.png.asset.json";
-import passionJuice from "@/assets/passion-juice.png.asset.json";
-import beefSteak from "@/assets/beef-steak.png.asset.json";
-import interior from "@/assets/interior.png.asset.json";
+import africanCoffee from "@/assets/african-coffee.jpg";
+import passionJuice from "@/assets/passion-juice.png";
+import beefSteak from "@/assets/beef-steak.jpg";
+import interior from "@/assets/interior.png";
 import breakfast from "@/assets/breakfast.jpg";
 import sandwich from "@/assets/sandwich.jpg";
 import samosa from "@/assets/samosa.jpg";
 import { Button } from "@/components/ui/button";
 import { HangingFrames } from "@/components/site/HangingFrames";
 import { Reveal } from "@/components/site/Reveal";
-import venue from "@/assets/venue-night.jpg.asset.json";
+import venue from "@/assets/venue-night.jpg";
 import { MenuHighlights, priceText } from "@/components/site/MenuExplorer";
 import { MenuQrSection } from "@/components/site/MenuQrSection";
 import { menuItems, type MenuItem } from "@/config/menuData";
@@ -45,11 +45,11 @@ function Home() {
   const specials = [
     pickItem("Cappuccino", coffee, "Barista's pick"),
     pickItem("African Coffee", africanCup, "Grab & Go"),
-    pickItem("Grilled Beef Steak", beefSteak.url, "House special"),
+    pickItem("Grilled Beef Steak", beefSteak, "House special"),
   ];
   const best = [
-    pickItem("African Coffee", africanCoffee.url),
-    pickItem("Passion Juice", passionJuice.url),
+    pickItem("African Coffee", africanCoffee),
+    pickItem("Passion Juice", passionJuice),
     pickItem("Rolex", breakfast),
     pickItem("Chicken Club Sandwich", sandwich),
     pickItem("Beef / Veggie Samosa", samosa),
@@ -61,7 +61,7 @@ function Home() {
     <>
       {/* HERO */}
       <section className="terrace-hero section-dark relative flex items-end overflow-hidden">
-        <img src={venue.url} alt="The Stafford Brewers terrace lit up at night" width={689} height={532} fetchPriority="high" className="terrace-photo absolute inset-0 size-full object-cover animate-in fade-in duration-1000" />
+        <img src={venue} alt="The Stafford Brewers terrace lit up at night" width={689} height={532} fetchPriority="high" className="terrace-photo absolute inset-0 size-full object-cover animate-in fade-in duration-1000" />
         <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/55 to-espresso/20" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-32 md:px-8 md:pb-28">
           <p className="eyebrow animate-in fade-in slide-in-from-bottom-2 text-gold duration-700">{siteConfig.businessName} · {siteConfig.location}</p>
@@ -166,7 +166,7 @@ function Home() {
         <Reveal className="relative">
           <img src={coffee} alt="Cappuccino and espresso" loading="lazy" width={816} height={816} className="aspect-[4/5] w-4/5 object-cover shadow-frame" />
           <img src={mains} alt="Chicken curry and grilled tilapia" loading="lazy" width={816} height={816} className="absolute -bottom-8 right-0 w-1/2 border-8 border-ivory object-cover shadow-frame" />
-          <img src={interior.url} alt="Inside Stafford Brewers — brick arches and long dining tables" loading="lazy" width={1316} height={1195} className="mt-16 aspect-[16/10] w-full object-cover shadow-frame" />
+          <img src={interior} alt="Inside Stafford Brewers — brick arches and long dining tables" loading="lazy" width={1316} height={1195} className="mt-16 aspect-[16/10] w-full object-cover shadow-frame" />
         </Reveal>
         <Reveal delay={150}>
           <p className="eyebrow text-gold">Our story</p>
