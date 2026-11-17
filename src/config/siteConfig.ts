@@ -7,7 +7,7 @@
 export const siteConfig = {
   businessName: "Stafford Brewers",
   tagline: "Exceptional Taste. Beautiful Moments.",
-  logoImage: "/__l5e/assets-v1/0d5c4f1b-7c8d-4924-9e0f-8fab6ed4bf69/stafford-logo.jpg",
+  logoImage: "/stafford-logo.jpg",
   currency: "RWF",
 
   /** Public menu URL used when sharing. Empty = current site address + /menu. */

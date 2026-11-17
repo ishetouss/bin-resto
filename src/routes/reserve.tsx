@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ReservationForm } from "@/components/site/ReservationForm";
-import venue from "@/assets/venue-night.jpg.asset.json";
+import venue from "@/assets/venue-night.jpg";
 
 export const Route = createFileRoute("/reserve")({
   head: () => ({
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/reserve")({
         <p className="eyebrow text-gold">Reservations</p>
         <h1 className="mt-3 text-6xl">Book Your Reservation</h1>
         <p className="mt-4 text-muted-foreground">Send us your preferred date and time. This is a booking <em>request</em> — your table is confirmed once Stafford Brewers replies.</p>
-        <img src={venue.url} alt="Our terrace at night" loading="lazy" className="mt-10 hidden aspect-[4/5] w-full object-cover shadow-frame md:block" />
+        <img src={venue} alt="Our terrace at night" loading="lazy" className="mt-10 hidden aspect-[4/5] w-full object-cover shadow-frame md:block" />
       </div>
       <div className="bg-card p-6 shadow-soft ring-1 ring-border md:p-10"><ReservationForm /></div>
     </section>
